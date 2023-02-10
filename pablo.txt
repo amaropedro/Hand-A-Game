@@ -1,1 +1,34 @@
-first commit
+CREATE TABLE User (
+	id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+nome VARCHAR(40) NOT NULL,
+senha
+email VARCHAR(40) NOT NULL,
+contato CHAR(11) NOT NULL,
+cidade VARCHAR(40) NOT NULL
+);
+
+CREATE TABLE Notifica (
+	id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	texto VARCHAR(200),
+	data DATE
+	CONSTRAINT fkUser FOREIGN KEY (id_User)
+);
+
+CREATE TABLE Aluga (
+	solicitacao_aceita BOOLEAN,
+	temp_max DATE,
+	data_inicio DATE NOT NULL
+);
+
+CREATE TABLE Game (
+	id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+titulo VARCHAR(40) NOT NULL,
+genero VARCHAR(40) NOT NULL,
+tipo VARCHAR(40) NOT NULL,
+CONSTRAINT fkPlataforma FOREIGN KEY (nome_Plataforma)
+);
+
+CREATE TABLE Plataforma (
+nome VARCHAR(20) PRIMARY KEY,
+alugueis_simultaneos 
+);
