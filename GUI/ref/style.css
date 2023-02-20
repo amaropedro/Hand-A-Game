@@ -1,0 +1,76 @@
+html,
+body{
+    padding: 0;
+    background-color: #1A2B42;
+    height: 100%;
+    margin: 0;
+    
+}
+
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    height: 100%;
+}
+
+#logo{
+    width: auto;
+    height: 200px;
+}
+
+.title{
+    color: white;
+    font-size: 64px;
+    font-family: 'Iceberg', cursive;
+}
+
+.login-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    background-color: black;
+    width: 40%;
+    height: 30%;
+    border-radius: 15px;
+}
+
+.fill{
+    display: flex;
+    background-color: white;
+    align-items: center;
+    color: black;
+    width: 60%;
+    border-radius: 34px;
+    padding-left: 10px;
+}
+
+.fill-item{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.destaque-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1A5A7E;
+    color: black;
+    border-radius: 15px;
+    width: 200px;
+    height: 30px;
+}
+
+.cadastro-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    background-color: black;
+    color: white;
+    width: 40%;
+    height: 15%;
+    border-radius: 15px;
+}
