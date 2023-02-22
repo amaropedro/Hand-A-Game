@@ -1,5 +1,6 @@
 # Hand-A-Game
-Disciplina: Engenharia de Software II
+Projeto desenvolvido em 2023, como parte das atividades avaliativas da UNIVASF </br>
+Disciplina: Engenharia de Software II </br>
 Prof. Dr. Ricardo Argenton Ramos
 
 ## Resumo de Funcionalidades
@@ -14,7 +15,7 @@ comunicar.
 Adicionalmente, é possível editar jogos já cadastrados, visualizar histórico de empréstimos
 e fazer busca com filtros por jogos.
 ## Diagrama de Caso de Uso
-[alt text](https://github.com/amaropedro/hand-a-game/blob/main/Diagrama.png?raw=true)
+![alt text](https://github.com/amaropedro/hand-a-game/blob/main/Diagrama.png?raw=true)
 ## REQUISITOS/FUNCIONALIDADES:
 - Cadastro
 - Login
