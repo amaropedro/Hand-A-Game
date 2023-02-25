@@ -58,6 +58,10 @@ body{
     padding-left: 10px;
 }
 
+input:focus{
+    outline: none;
+}
+
 .fill-item{
     margin-left: 5px;
     margin-right: 5px;
