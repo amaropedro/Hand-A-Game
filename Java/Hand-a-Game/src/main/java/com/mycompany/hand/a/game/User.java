@@ -29,7 +29,8 @@ public class User {
         this.hashsenha = hash(senha);
     }
     
-    //Deve ser uma classe separada no futuro
+    //Deve ser uma classe separada no futuro. 
+    //Essa função de hash não é das mais seguras, entretanto, para o escopo do projeto basta.
     public byte[] hash(String senha){
         try{
             MessageDigest md = MessageDigest.getInstance("SHA-512");
