@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class HandAGame {
 
     public static void main(String[] args) {
-        User u = new User("Pedro", "8788990011", "pedro@email.com", "Petrolina", "1234", 1);
+        User u = new User("Pedro", "8788990011", "pedro@email.com", "Petrolina", "4321", 1);
         
         if(Arrays.equals(u.getHashsenha(), u.hash("1234")) ){
             System.out.println("Login efetuado com sucesso");
