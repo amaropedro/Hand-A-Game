@@ -7,6 +7,10 @@ package handagame;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  *
@@ -27,7 +31,23 @@ public class User {
         this.cidade = cidade;
         this.ID = ID;
         this.hashsenha = hash(senha);
+        updateTables();
     }
+    
+    public void updateTables(){
+        try{
+            Class.forName("org.postgresql.Driver");
+            Connection con;
+            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "senha");
+            Statement stm = con.createStatement();
+            String qry = "INSERT INTO usuario values ('" + String.valueOf(this.ID) + "', '"+ this.nome + "', '" + this.contato + "', '" + this.cidade + "', '" + this.email + "', '" + this.hashsenha.toString() +"')";
+            stm.executeUpdate(qry);           
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+        
     
     //Deve ser uma classe separada no futuro. 
     //Essa função de hash não é das mais seguras, entretanto, para o escopo do projeto basta.
