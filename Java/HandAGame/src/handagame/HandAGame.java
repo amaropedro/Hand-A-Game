@@ -21,11 +21,15 @@ public class HandAGame {
         U.setEmail("italo.tenorio@email.com");
         U.efetuarCadastro();
 
+        System.out.println("");
+        System.out.println("---------");
         //Fazendo diferentes consultas ao BD com o Padrão Strategy
         DbObject o = new DbObject();
         
         o.lookup("SELECT* FROM usuario", 6);
         
+        System.out.println("");
+        System.out.println("---------");
         //Fazendo Login
         Sistema s = new Sistema();
         s.login("Pedro", "minhasenha");

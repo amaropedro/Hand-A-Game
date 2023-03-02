@@ -4,7 +4,7 @@
  */
 package handagame;
 import utils.Hash;
-
+import java.sql.ResultSet;
 /**
  *
  * @author Amaro
@@ -22,7 +22,18 @@ public class CadastroUsuario extends DbObject implements InterfaceCadastro{
     
     @Override
     public void setNome(String nome) {
-        this.nome = nome;
+        String qry = "SELECT nome FROM usuario WHERE nome ='" + nome + "'";
+        ResultSet rs = search(qry);
+        try{
+            if(!rs.isBeforeFirst()){
+                this.nome = nome;
+            }
+            else{
+                System.out.println("Nome de usuario indisponivel!");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        } 
     }
 
     @Override
@@ -53,9 +64,14 @@ public class CadastroUsuario extends DbObject implements InterfaceCadastro{
     }
     
     public User efetuarCadastro(){
-        setID();
-        String qry = "INSERT INTO usuario values ('" + String.valueOf(this.ID) + "', '"+ this.nome + "', '" + this.contato + "', '" + this.cidade + "', '" + this.email + "', '" + this.senha +"')";
-        updateTables(qry);
-        return new User(nome, contato, email, cidade, senha, ID);
+        if(nome!=null && contato!=null && email!=null && cidade!=null && senha!=null ){
+            setID();
+            String qry = "INSERT INTO usuario values ('" + String.valueOf(this.ID) + "', '"+ this.nome + "', '" + this.contato + "', '" + this.cidade + "', '" + this.email + "', '" + this.senha +"')";
+            updateTables(qry);
+            return new User(nome, contato, email, cidade, senha, ID);
+        }else{
+            System.out.println("CAMPOS INCORRETOS OU NÃO PREENCHIDOS");
+        }
+        return null;
     }
 }
