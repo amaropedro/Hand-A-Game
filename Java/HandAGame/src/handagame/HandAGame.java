@@ -17,36 +17,21 @@ import java.util.Arrays;
 public class HandAGame {
 
     public static void main(String[] args) {
-         
-        User u = new User("Italo", "8788990011", "italo@email.com", "Petrolina", "xadrez", 3);
         
-        if(Arrays.equals(u.getHashsenha(), u.hash("1234")) ){
-            System.out.println("Login efetuado com sucesso");
-        }
-        else{
-            System.out.println("Senha incorreta!");
-        }
+        //User u1 = new User("Pedro", "879 8855-4459", "pedro.amaro@email.com", "Petrolina", "1234", 1);
+        User u2 = new User("José", "87977665544", "jose.dias@email.com", "Petrolina", "minhasenha", 4);
+        //User u3 = new User("Italo", "(87) 98866-5544", "italo@email.com", "Petrolina", "xadrez", 2);
         
-        try {
-            String url = "jdbc:postgresql://localhost:5432/postgres";
-            String usuario = "postgres";
-            String senha = "senha";
-            Class.forName("org.postgresql.Driver");
-            Connection con;
-            con = DriverManager.getConnection(url, usuario, senha);
-            System.out.println("CONECTADO!");
-            Statement stm = con.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT* FROM usuario");
-            while(rs.next()) {
-                System.out.print(rs.getString(1));
-                System.out.println();
-                System.out.print(rs.getString(2));
-                System.out.println();
-            }
-            
-            con.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } 
+        
+        
+        //DbObject o = new DbObject();
+        
+        //o.lookup("SELECT* FROM usuario", 6);
+        
+        Sistema s = new Sistema();
+        
+        s.login("José", "minhasenha");
+        System.out.println("-----");
+        System.out.println(u2.getHashsenha());
     }
 }
