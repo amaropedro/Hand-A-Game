@@ -11,19 +11,25 @@ package handagame;
 public class HandAGame {
 
     public static void main(String[] args) {
+        //Cadastrando usuarios com o Padrão Builder
+        CadastroUsuario U = new CadastroUsuario();
         
-        //User u1 = new User("Pedro", "879 8855-4459", "pedro.amaro@email.com", "Petrolina", "1234", 1);
-        //User u2 = new User("José", "87977665544", "jose.dias@email.com", "Petrolina", "minhasenha", 4);
-        //User u3 = new User("Italo", "(87) 98866-5544", "italo@email.com", "Petrolina", "xadrez", 2);
+        U.setNome("Italo");
+        U.setSenha("xadres", "xadres");
+        U.setCidade("Petrolina");
+        U.setContato("(87) 9 8800-4433");
+        U.setEmail("italo.tenorio@email.com");
+        U.efetuarCadastro();
+
+        //Fazendo diferentes consultas ao BD com o Padrão Strategy
+        DbObject o = new DbObject();
         
+        o.lookup("SELECT* FROM usuario", 6);
         
-        
-        //DbObject o = new DbObject();
-        
-        //o.lookup("SELECT* FROM usuario", 6);
-        
+        //Fazendo Login
         Sistema s = new Sistema();
-        
-        s.login("José", "xadrez");
+        s.login("Pedro", "minhasenha");
+        s.login("Pedro", "123");
+        s.login("Italo", "xadres");
     }
 }

@@ -14,6 +14,7 @@ import java.sql.Statement;
  * @author Amaro
  */
 public class DbObject implements DataBase{
+    //Segue o padrão Strategy
     
     public void updateTables(String qry){
         try{
@@ -60,5 +61,26 @@ public class DbObject implements DataBase{
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public int count() {
+       int n = 0;
+       try{
+            Class.forName("org.postgresql.Driver");
+            Connection con;
+            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "senha");
+            Statement stm = con.createStatement();
+            String qry = "SELECT COUNT(*) FROM usuario";
+            ResultSet rs = stm.executeQuery(qry);
+            while(rs.next()) {
+                n = rs.getInt(1);
+            }
+            con.close();
+            return  n;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return n;
     }
 }

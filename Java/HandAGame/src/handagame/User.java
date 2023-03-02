@@ -4,8 +4,6 @@
  */
 package handagame;
 
-import utils.Hash;
-
 /**
  *
  * @author Amaro
@@ -24,9 +22,7 @@ public class User extends DbObject{
         this.email = email;
         this.cidade = cidade;
         this.ID = ID;
-        this.hashsenha = Hash.hash(senha);
-        String qry = "INSERT INTO usuario values ('" + String.valueOf(this.ID) + "', '"+ this.nome + "', '" + this.contato + "', '" + this.cidade + "', '" + this.email + "', '" + this.hashsenha.toString() +"')";
-        updateTables(qry);
+        this.hashsenha = senha;
     }
     
     public String getNome() {

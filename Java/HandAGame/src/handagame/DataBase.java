@@ -13,5 +13,6 @@ package handagame;
 public interface DataBase {
     
     void lookup(String qry, int max_atributes);
+    int count();
     
 }
