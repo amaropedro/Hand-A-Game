@@ -252,3 +252,24 @@ input:focus{
 .info{
     margin-left: 15px;
 }
+
+.jogos{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+
+.new-game-btn{
+    border: 4px dashed black;
+    width: 200px;
+    height: 250px;
+    margin-left: 2%;
+    background-image: url(plus.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
