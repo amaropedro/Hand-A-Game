@@ -4,9 +4,7 @@
  */
 package handagame;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import utils.Hash;
 
 /**
  *
@@ -17,7 +15,7 @@ public class User extends DbObject{
     private String contato;
     private String email;
     private String cidade;
-    private byte[] hashsenha;
+    private String hashsenha;
     private int ID;
 
     public User(String nome, String contato, String email, String cidade, String senha,int ID) {
@@ -26,23 +24,9 @@ public class User extends DbObject{
         this.email = email;
         this.cidade = cidade;
         this.ID = ID;
-        this.hashsenha = hash(senha);
+        this.hashsenha = Hash.hash(senha);
         String qry = "INSERT INTO usuario values ('" + String.valueOf(this.ID) + "', '"+ this.nome + "', '" + this.contato + "', '" + this.cidade + "', '" + this.email + "', '" + this.hashsenha.toString() +"')";
         updateTables(qry);
-    }
-        
-    //Deve ser uma classe separada no futuro. 
-    //Essa função de hash não é das mais seguras, entretanto, para o escopo do projeto basta.
-    public byte[] hash(String senha){
-        try{
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-            byte[] hashedPassword = md.digest(senha.getBytes(StandardCharsets.UTF_8));
-            return hashedPassword;
-        }
-        
-        catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
     }
     
     public String getNome() {
@@ -77,11 +61,11 @@ public class User extends DbObject{
         this.cidade = cidade;
     }
 
-    public byte[] getHashsenha() {
+    public String getHashsenha() {
         return hashsenha;
     }
 
-    public void setHashsenha(byte[] hashsenha) {
+    public void setHashsenha(String hashsenha) {
         this.hashsenha = hashsenha;
     }
 
