@@ -164,10 +164,16 @@ input:focus{
     height: 100%;
 }
 
+.side{
+    position: fixed;
+    width: 18%;
+    height: 100%;
+}
+
 .sidebar{
     display: flex;
     flex-direction: column;
-    width: 20%;
+    width: 100%;
     height: 100%;
     background-color: black;
     color: white;
@@ -214,6 +220,7 @@ input:focus{
 }
 
 .profile{
+    margin-left: 18%;
     display: flex;
     color: black;
     font-size: 30px;
@@ -254,6 +261,7 @@ input:focus{
 }
 
 .jogos{
+    margin-left: 18%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -275,6 +283,7 @@ input:focus{
 }
 
 .pesquisa{
+    margin-left: 18%;
     display: flex;
     flex-direction: column;
     width: 100%;
