@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand a Game - Pesquisa</title>
+    <link rel="stylesheet" href="ref/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <div class="side">
+            <div class="sidebar">
+                <div class="profile-pic">
+                    <img id="logo" src="ref/ProfilePic.png">
+                </div>
+                <div class="sidebar-btn">
+                    <img class="icon" src="ref/user_w.png">
+                    <div class="text">Perfil</div>
+                </div>
+                <div class="sidebar-btn">
+                    <img class="icon" src="ref/jogos.png">
+                    <div class="text">Meus Jogos</div>
+                </div>
+                <div class="sidebar-btn">
+                    <img class="icon" src="ref/emprestar.png">
+                    <div class="text">Emprestados</div>
+                </div>
+                <div class="sidebar-btn" id="current">
+                    <img class="icon" src="ref/pesquisa_b.png">
+                    <div class="text">Pesquisa</div>
+                </div>
+                <div class="sidebar-btn">
+                    <img class="icon" src="ref/notificação.png">
+                    <div class="text">Notificações</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pesquisa">
+            <div class="container-pesquisa">
+                <div class="container-barra-pesquisa">
+                    <img class="icon-pesquisa" src="ref/pesquisa.png">
+                    <form class="barra-pesquisa">
+                        <input class="fill" id="pesquisa">
+                    </form> 
+                </div>
+
+                <div class="filtros">
+                    <div class="filtro-texto">
+                        Plataforma
+                    </div>
+                    <div class="dropdown">
+                        Qualquer
+                        <div class="dropbtn"></div>
+                        <div class="dropdown-content">
+                            <a href="#">Steam</a>
+                            <a href="#">Epic Games</a>
+                            <a href="#">Nintendo</a>
+                            <a href="#">Xbox</a>
+                            <a href="#">Playstation</a>
+                        </div>
+                    </div>
+                    <div class="filtro-texto">
+                        Tempo Maximo
+                    </div>
+                    <div class="dropdown">
+                        Qualquer
+                        <div class="dropbtn"></div>
+                        <div class="dropdown-content">
+                            <a href="#">1 mês</a>
+                            <a href="#">2 meses</a>
+                            <a href="#">3 meses</a>
+                            <a href="#">4 meses</a>
+                            <a href="#">5 meses</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="results">
+                <div class="result-item">
+                    <div class="platforma">
+                        Playstation
+                    </div>
+
+                    <div class="overlay">
+                        <div>
+                            Dono: Amaro
+                        </div>
+                        <div>
+                            Tempo Maximo: 3 meses
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
