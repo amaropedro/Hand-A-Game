@@ -204,7 +204,7 @@ input:focus{
 
 .icon{
     margin-right: 8%;
-    margin-left: 20%;
+    margin-left: 15%;
     height: auto;
     width: 30px;
 }
@@ -417,4 +417,69 @@ input:focus{
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
+}
+
+.notificações{
+    margin-left: 18%;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding-top: 2%;
+}
+
+.notificação{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 25%;
+    background-color: #140F0F;
+    border-radius: 15px;
+    color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+#notificação{
+    width: auto;
+    height: 100px;
+    margin-right: 5%;
+}
+
+.user-info{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+}
+
+.not-text{
+    display: flex;
+    flex-direction: column;
+}
+
+.action{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 90%;
+}
+
+.rec{
+    background-color: #140F0F;
+    border: none;
+    color: #C82929;
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 5%;
+}
+
+.acc{
+    background-color: #140F0F;
+    border: none;
+    color: #1744E5;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.acc:hover, .rec:hover{
+    text-decoration: underline;
 }
