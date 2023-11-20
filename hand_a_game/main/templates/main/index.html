@@ -7,7 +7,7 @@
         <h1> Jogos </h1>
         {% if games_list %}
             {% for game in games_list %}
-                <p> {{ game.title }} </p>
+                <p> {{game.user}} - {{ game.title }} </p>
             {% endfor %}
         {% endif %}
     </body>
