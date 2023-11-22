@@ -11,6 +11,18 @@ def listTest(request):
     context = {'games_list': allGames}
     return render(request, 'main/index.html', context)
 
+def signup_view(request):
+    
+    if request.method == 'POST':
+        # Recupera os dados do formulário do request
+        email = request.POST['email']
+        username = request.POST['username']
+        password = request.POST['password']
+
+        User.objects.create_user(email=email, username=username, password=password)    
+        
+    return render(request, 'main/signup.html')
+        
 def login_view(request):
     if request.method == 'POST':
         # Recupera os dados do formulário do request
@@ -29,6 +41,7 @@ def login_view(request):
             return redirect('home')
         else:
             print("OPS, não foi!")
+            print(email, password)
             # Se a autenticação falhar, você pode tratar isso de acordo
             return render(request, 'main/login.html', {
                 'erro': 'Credenciais inválidas'
