@@ -6,6 +6,9 @@
   <title>Login</title>
 </head>
 <body>
+  {% if erro %}
+      <p> {{erro}} </p>
+  {% endif %}
 
   <!-- login.html -->
   <form method="post" action="{% url 'login' %}">

@@ -21,14 +21,14 @@ def login_view(request):
         user = authenticate(request, email=email, password=password)
 
         if user is not None:
-            # # Se o usuário foi autenticado com sucesso, faça o login
-            # login(request, user)
-            # # Redirecione para a página de sucesso ou qualquer outra página desejada
-            # return redirect('pagina_de_sucesso')
             print("OK, deu certo!")
+            # Se o usuário foi autenticado com sucesso, faça o login
+            login(request, user)
+            # Redirecione para a página de sucesso ou qualquer outra página desejada
+            # 'home': é o nome da view
+            return redirect('home')
         else:
-            print("OPS")
-
+            print("OPS, não foi!")
             # Se a autenticação falhar, você pode tratar isso de acordo
             return render(request, 'main/login.html', {
                 'erro': 'Credenciais inválidas'
@@ -36,3 +36,6 @@ def login_view(request):
 
     # Se o método da requisição não for POST, apenas renderize o formulário de login
     return render(request, 'main/login.html')
+
+def home(request):
+    return render(request, 'main/home.html')
