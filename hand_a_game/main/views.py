@@ -38,4 +38,7 @@ def login_view(request):
     return render(request, 'main/login.html')
 
 def home(request):
-    return render(request, 'main/home.html')
+    userGames = Game.objects.filter(user=request.user)
+    return render(request, 'main/home.html', {
+        'games_list': userGames
+    })

@@ -6,6 +6,23 @@
   <title>Home</title>
 </head>
 <body>
-  <h1>Estamos aqui!</h1>
+
+  {% if user.is_authenticated %}
+
+    <h1>Seja bem-vindo {{ user.username }}!</h1>
+
+    {% if games_list %}
+      <h2>Seus jogos</h2>
+      {% for game in games_list %}
+        <p> {{game.user}} - {{ game.title }} </p>
+      {% endfor %}
+    {% endif %}
+
+
+  {% else %}
+    <h1>You are not logged in</h1>
+  {% endif %}
+
+
 </body>
 </html>
