@@ -5,7 +5,7 @@ from django.utils import timezone
 import datetime
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-class MeuUsuarioManager(BaseUserManager):
+class MyUserManager(BaseUserManager):
   def create_user(self, email, username, password=None, **extra_fields):
     if not email:
       raise ValueError('O endereço de e-mail deve ser fornecido')
@@ -29,7 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin, models.Model):
 
   is_staff = models.BooleanField(default=False)
 
-  objects = MeuUsuarioManager()
+  objects = MyUserManager()
 
   USERNAME_FIELD = 'email'
   REQUIRED_FIELDS = ['username']
