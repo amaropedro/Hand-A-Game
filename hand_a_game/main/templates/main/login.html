@@ -1,26 +1,84 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand a Game</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Iceberg&display=swap" 
+      rel="stylesheet"
+    >
 </head>
+
 <body>
-  {% if erro %}
-      <p> {{erro}} </p>
-  {% endif %}
+    <div class="center">
+        <div class="logo-container">
+            <img id="logo" src="{% static 'main/images/logo.png' %}">
+        </div>
 
-  <!-- login.html -->
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <label for="id_email">Email:</label>
-    <input type="email" name="email" id="id_email">
+        <div class="title">
+            Hand a Game
+        </div>
 
-    <label for="id_password">Password:</label>
-    <input type="password" name="password" id="id_password">
+        <div class="login-container">
+            <form 
+                class="form-container"
+                method="post" 
+                action="{% url 'login' %}"
+            >
+                {% csrf_token %}
+                
+                <div class="fill">
+                    <div class="fill-item">
+                        <img src="{% static 'main/images/mdi_user.png' %}">
+                    </div>
+                    <input 
+                        class="no-border" 
+                        name="email" 
+                        type="email" 
+                        placeholder="Email"
+                    >
+                </div>
 
-    <input type="submit" value="Login">
-  </form>
+                <div class="fill">
+                    <div class="fill-item">
+                        <img src="{% static 'main/images/carbon_password.png' %}">
+                    </div>
+                    <input 
+                        class="no-border" 
+                        name="password" 
+                        type="password" 
+                        placeholder="Senha"
+                    >
+                </div>
+                <div>
+                    <input class="destaque-btn" type="submit" value="Login">
+                </div>
+            </form>
 
+        </div>
+
+        <div class="cadastro-container">
+            Não possui uma conta?
+
+            <a class="destaque-btn" href="{% url 'signup' %}">
+              Cadastro
+            </a>
+        </div>
+
+    </div>
 </body>
+
+  <script>
+    {% if erro %}
+        alert("{{erro}}");
+    {% endif %}
+  </script>
+
 </html>

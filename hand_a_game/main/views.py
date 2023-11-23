@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
 # Create your views here.
-def listTest(request):
+def allGames_view(request):
     allGames = Game.objects.order_by('user')
     context = {'games_list': allGames}
     return render(request, 'main/index.html', context)
@@ -50,7 +50,7 @@ def login_view(request):
     # Se o método da requisição não for POST, apenas renderize o formulário de login
     return render(request, 'main/login.html')
 
-def home(request):
+def home_view(request):
     userGames = Game.objects.filter(user=request.user)
     return render(request, 'main/home.html', {
         'games_list': userGames
