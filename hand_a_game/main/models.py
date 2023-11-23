@@ -6,11 +6,11 @@ import datetime
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 class MyUserManager(BaseUserManager):
-  def create_user(self, email, username, password=None, **extra_fields):
+  def create_user(self, email, username, password=None, city=None, phone=None, **extra_fields):
     if not email:
       raise ValueError('O endereço de e-mail deve ser fornecido')
     email = self.normalize_email(email)
-    user = self.model(email=email, username=username, **extra_fields)
+    user = self.model(email=email, username=username, city=city, phone=phone, **extra_fields)
     user.set_password(password)
     user.save(using=self._db)
     return user
@@ -24,7 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin, models.Model):
   username = models.CharField(max_length=200)
   email = models.EmailField(unique=True)
   city = models.CharField(max_length=200)
-  contact = models.CharField(max_length=200)
+  phone = models.CharField(max_length=200)
   password = models.CharField(max_length=200)
 
   is_staff = models.BooleanField(default=False)

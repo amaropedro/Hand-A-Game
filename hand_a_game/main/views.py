@@ -18,8 +18,11 @@ def signup_view(request):
         email = request.POST['email']
         username = request.POST['username']
         password = request.POST['password']
+        city = request.POST['city']
+        phone = request.POST['phone']
 
-        User.objects.create_user(email=email, username=username, password=password)    
+        User.objects.create_user(email=email, username=username, 
+                                 password=password, city=city, phone=phone)    
         
     return render(request, 'main/signup.html')
         

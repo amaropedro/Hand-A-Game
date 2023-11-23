@@ -1,3 +1,60 @@
+{% comment %} {% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand a Game - Cadastro</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="center">
+        <div class="header">
+            <img id="logo-small" src="ref/logo.png">
+            <div class="small-title">Hand a Game</div>
+        </div>
+        <div class="section-title">Cadastro</div>
+        <form class="cadastro-form-container">
+            <div class="fill-item-row">
+                <div>Username</div>
+                <input class="fill" id="empty">
+            </div>
+            <div class="fill-item-row">
+                <div>Senha</div>
+                <input class="fill" id="empty">
+            </div>
+            <div class="fill-item-row">
+                <div>Confirmar Senha</div>
+                <input class="fill" id="empty">
+            </div>
+            <div class="fill-item-row">
+                <div>Email</div>
+                <input class="fill" id="empty">
+            </div>
+            <div class="fill-item-row">
+                <div>Cidade</div>
+                <input class="fill" id="empty">
+            </div>
+            <div class="fill-item-row">
+                <div>Contato</div>
+                <input class="fill" id="empty" placeholder="Ex: whatsapp">
+            </div>
+        </form>
+
+        <div class="cadastro-btn">Finalizar Cadastro</div>
+    </div>
+
+</body>
+</html>
+ {% endcomment %}
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,6 +75,12 @@
 
             <label for="id_username">Username:</label>
             <input type="input" name="username" id="id_username">
+
+            <label for="id_city">Cidade:</label>
+            <input type="input" name="city" id="id_city">
+
+            <label for="id_phone">Telefone:</label>
+            <input type="input" name="phone" id="id_phone">
 
             <label for="id_password">Password:</label>
             <input type="password" name="password" id="id_password">
