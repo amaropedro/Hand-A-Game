@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login
 def allGames_view(request):
     allGames = Game.objects.order_by('user')
     context = {'games_list': allGames}
-    return render(request, 'main/index.html', context)
+    return render(request, 'main/allGames.html', context)
 
 def signup_view(request):
     
