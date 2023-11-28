@@ -1,3 +1,5 @@
+{% comment %} {% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hand a Game - Cadastro</title>
-    <link rel="stylesheet" href="ref/style.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/styles.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
@@ -49,4 +51,42 @@
     </div>
 
 </body>
+</html>
+ {% endcomment %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign Up</title>
+    </head>
+
+    <body>
+        {% if erro %}
+            <p> {{erro}} </p>
+        {% endif %}
+
+        <form method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <label for="id_email">Email:</label>
+            <input type="email" name="email" id="id_email">
+
+            <label for="id_username">Username:</label>
+            <input type="input" name="username" id="id_username">
+
+            <label for="id_city">Cidade:</label>
+            <input type="input" name="city" id="id_city">
+
+            <label for="id_phone">Telefone:</label>
+            <input type="input" name="phone" id="id_phone">
+
+            <label for="id_password">Password:</label>
+            <input type="password" name="password" id="id_password">
+
+            <input type="submit" value="signup">
+        </form>
+
+    </body>
 </html>
