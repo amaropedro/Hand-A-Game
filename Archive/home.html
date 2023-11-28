@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+</head>
+<body>
+
+  {% if user.is_authenticated %}
+
+    <h1>Seja bem-vindo {{ user.username }}!</h1>
+
+    {% if games_list %}
+      <h2>Seus jogos</h2>
+      {% for game in games_list %}
+        <p> {{game.user}} - {{ game.title }} </p>
+      {% endfor %}
+    {% endif %}
+
+
+  {% else %}
+    <h1>You are not logged in</h1>
+  {% endif %}
+
+
+</body>
+</html>

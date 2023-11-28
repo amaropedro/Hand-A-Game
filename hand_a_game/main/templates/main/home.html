@@ -1,28 +1,125 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand a Game - Pesquisa</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link 
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" 
+        rel="stylesheet"
+    >
 </head>
 <body>
+    <div class="app">
+        <div class="side">
+            <div class="sidebar">
+                <div class="profile-pic">
+                    <img id="logo" src="{% static 'main/images/ProfilePic.png' %}">
+                </div>
+                <div class="sidebar-btn">
+                    <img class="icon" src="{% static 'main/images/user_w.png' %}">
+                    <div class="text">Perfil</div>
+                </div>
+                <div class="sidebar-btn">
+                    <img class="icon" src="{% static 'main/images/jogos.png' %}">
+                    <div class="text">Meus Jogos</div>
+                </div>
+                <div class="sidebar-btn">
+                    <img class="icon" src="{% static 'main/images/emprestar.png' %}">
+                    <div class="text">Emprestados</div>
+                </div>
+                <div class="sidebar-btn" id="current">
+                    <img class="icon" src="{% static 'main/images/pesquisa_b.png' %}">
+                    <div class="text">Pesquisa</div>
+                </div>
+                <div class="sidebar-btn">
+                    <img class="icon" src="{% static 'main/images/notificação.png' %}">
+                    <div class="text">Notificações</div>
+                </div>
+            </div>
+        </div>
 
-  {% if user.is_authenticated %}
+        <div class="pesquisa">
+            <div class="container-pesquisa">
+                <div class="container-barra-pesquisa">
+                    <img 
+                        class="icon-pesquisa" 
+                        src="{% static 'main/images/pesquisa.png' %}"
+                    >
+                    <form class="barra-pesquisa">
+                        <input class="fill" id="pesquisa">
+                    </form> 
+                </div>
 
-    <h1>Seja bem-vindo {{ user.username }}!</h1>
+                <div class="filtros">
+                    <div class="filtro-texto">
+                        Plataforma
+                    </div>
+                    <div class="dropdown">
+                        Qualquer
+                        <div class="dropbtn"></div>
+                        <div class="dropdown-content">
+                            {% if platforms %}
+                                {% for platform in platforms %}
+                                    <a href="#">{{platform}}</a>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="filtro-texto">
+                        Tempo Maximo
+                    </div>
+                    <div class="dropdown">
+                        Qualquer
+                        <div class="dropbtn"></div>
+                        <div class="dropdown-content">
+                            <a href="#">30 dias</a>
+                            <a href="#">60 dias</a>
+                            <a href="#">90 dias</a>
+                            <a href="#">120 dias</a>
+                            <a href="#">150 dias</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
 
-    {% if games_list %}
-      <h2>Seus jogos</h2>
-      {% for game in games_list %}
-        <p> {{game.user}} - {{ game.title }} </p>
-      {% endfor %}
-    {% endif %}
+            <div class="results">
 
+                {% if games_list %}
+                    {% for game in games_list %}
 
-  {% else %}
-    <h1>You are not logged in</h1>
-  {% endif %}
+                        <div class="result-item"
+                            style="
+                                background-image: {{game.cover.url}});
+                            "
+                        >
+                            <div class="platforma">
+                                {{game.platform}}
+                            </div>
+        
+                            <div class="overlay">
+                                <div>
+                                    Dono: {{game.user.username}}
+                                </div>
+                                <div>
+                                    Tempo Maximo: {{game.rentalDuration}} dias
+                                </div>
+                            </div>
+                        </div>
 
+                    {% endfor %}
+                {% endif %}
 
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>

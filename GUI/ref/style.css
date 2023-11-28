@@ -67,7 +67,7 @@ input:focus{
     margin-right: 5px;
 }
 
-.no-border{
+#no-border{
     border: none;
     width: 80%;
 }
@@ -177,6 +177,7 @@ input:focus{
     height: 100%;
     background-color: black;
     color: white;
+    background-image: url("detail.png");
     background-repeat: no-repeat;
     background-position: bottom;
 }
@@ -276,6 +277,7 @@ input:focus{
     width: 200px;
     height: 250px;
     margin-left: 2%;
+    background-image: url(plus.png);
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -369,6 +371,7 @@ input:focus{
 }
 
 .dropbtn{
+    background-image: url(dropdown.png);
     background-repeat: no-repeat;
     background-position: center;
     height: 18px;

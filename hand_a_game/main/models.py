@@ -48,7 +48,7 @@ class Game(models.Model):
   title = models.CharField(max_length=200)
   isRented = models.BooleanField()
   isPhysical = models.BooleanField()
-  cover =  models.ImageField()
+  cover =  models.ImageField(upload_to='images/')
   rentalDuration = models.IntegerField()
   price = models.DecimalField(default=0.0, decimal_places=2, max_digits=5)
   isAvailableToRent = models.BooleanField()

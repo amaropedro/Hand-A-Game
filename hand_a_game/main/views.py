@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Game, User
+from .models import Game, User, Platform
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -8,8 +8,10 @@ from django.contrib.auth import authenticate, login
 # Create your views here.
 def allGames_view(request):
     allGames = Game.objects.order_by('user')
-    context = {'games_list': allGames}
-    return render(request, 'main/allGames.html', context)
+    
+    return render(request, 'main/allGames.html', {
+        'games_list': allGames
+    })
 
 def signup_view(request):
     
@@ -21,8 +23,12 @@ def signup_view(request):
         city = request.POST['city']
         phone = request.POST['phone']
 
-        User.objects.create_user(email=email, username=username, 
-                                 password=password, city=city, phone=phone)    
+        User.objects.create_user(
+            email=email, 
+            username=username, 
+            password=password, 
+            city=city, phone=phone
+        )    
         
     return render(request, 'main/signup.html')
         
@@ -53,8 +59,17 @@ def login_view(request):
     # Se o método da requisição não for POST, apenas renderize o formulário de login
     return render(request, 'main/login.html')
 
-def home_view(request):
+def myGames_view(request):
     userGames = Game.objects.filter(user=request.user)
     return render(request, 'main/home.html', {
         'games_list': userGames
+    })
+
+def home_view(request):
+    games = Game.objects.exclude(user=request.user)
+    platforms = Platform.objects.all()
+
+    return render(request, 'main/home.html', {
+        'games_list': games,
+        'platforms': platforms,
     })
