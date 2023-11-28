@@ -6,13 +6,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
 # Create your views here.
-def allGames_view(request):
-    allGames = Game.objects.order_by('user')
-    
-    return render(request, 'main/allGames.html', {
-        'games_list': allGames
-    })
-
 def signup_view(request):
     
     if request.method == 'POST':
@@ -59,17 +52,21 @@ def login_view(request):
     # Se o método da requisição não for POST, apenas renderize o formulário de login
     return render(request, 'main/login.html')
 
-def myGames_view(request):
-    userGames = Game.objects.filter(user=request.user)
-    return render(request, 'main/home.html', {
-        'games_list': userGames
-    })
-
 def home_view(request):
-    games = Game.objects.exclude(user=request.user)
-    platforms = Platform.objects.all()
+    if request.user.is_authenticated:
+        games = Game.objects.exclude(user=request.user)
+        platforms = Platform.objects.all()
 
-    return render(request, 'main/home.html', {
-        'games_list': games,
-        'platforms': platforms,
-    })
+        return render(request, 'main/home.html', {
+            'games_list': games,
+            'platforms': platforms,
+        })
+    return redirect('login')
+
+def myGames_view(request):
+    if request.user.is_authenticated:
+        userGames = Game.objects.filter(user=request.user)
+        return render(request, 'main/myGames.html', {
+            'games_list': userGames
+        })
+    return redirect('login')
