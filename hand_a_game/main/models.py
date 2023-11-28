@@ -23,8 +23,8 @@ class MyUserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin, models.Model):
   username = models.CharField(max_length=200)
   email = models.EmailField(unique=True)
-  city = models.CharField(max_length=200)
-  phone = models.CharField(max_length=200)
+  city = models.CharField(max_length=200, blank=True, null=True)
+  phone = models.CharField(max_length=200, blank=True, null=True)
   password = models.CharField(max_length=200)
 
   is_staff = models.BooleanField(default=False)
@@ -39,7 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin, models.Model):
 
 class Platform(models.Model):
   platformName = models.CharField(max_length=200)
-  logo = models.ImageField()
+  logo = models.ImageField(upload_to='images/platforms/')
   
   def __str__(self):
     return self.platformName
@@ -48,7 +48,7 @@ class Game(models.Model):
   title = models.CharField(max_length=200)
   isRented = models.BooleanField()
   isPhysical = models.BooleanField()
-  cover =  models.ImageField(upload_to='images/')
+  cover =  models.ImageField(upload_to='images/games/')
   rentalDuration = models.IntegerField()
   price = models.DecimalField(default=0.0, decimal_places=2, max_digits=5)
   isAvailableToRent = models.BooleanField()

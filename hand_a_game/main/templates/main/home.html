@@ -1,5 +1,10 @@
 {% load static %}
 
+{% block styles %}
+  <style>
+  </style>
+{% endblock %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -96,9 +101,9 @@
                     {% for game in games_list %}
 
                         <div class="result-item"
-                            style="
-                                background-image: {{game.cover.url}});
-                            "
+                            style='
+                                background-image: url("{{game.cover.url}}");
+                            '
                         >
                             <div class="platforma">
                                 {{game.platform}}
