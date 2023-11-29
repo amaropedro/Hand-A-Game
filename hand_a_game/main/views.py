@@ -21,7 +21,14 @@ def signup_view(request):
             username=username, 
             password=password, 
             city=city, phone=phone
-        )    
+        )
+        
+        # Autentica o usuário
+        user = authenticate(request, email=email, password=password)    
+        if user is not None:
+            print("OK, deu certo!")
+            login(request, user)
+            return redirect('home')
         
     return render(request, 'main/signup.html')
         

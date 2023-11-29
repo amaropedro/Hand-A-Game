@@ -386,6 +386,7 @@ input:focus{
     height: 100%;
     width: 90%;
     padding-top: 3%;
+    gap: 1rem;
 }
 
 .result-item{
