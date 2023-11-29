@@ -99,25 +99,26 @@
 
                 {% if games_list %}
                     {% for game in games_list %}
-
-                        <div class="result-item"
-                            style='
-                                background-image: url("{{game.cover.url}}");
-                            '
-                        >
-                            <div class="platforma">
-                                {{game.platform}}
-                            </div>
-        
-                            <div class="overlay">
-                                <div>
-                                    Dono: {{game.user.username}}
+                        {% if game.isAvailableToRent %}
+                            <div class="result-item"
+                                style='
+                                    background-image: url("{{game.cover.url}}");
+                                '
+                            >
+                                <div class="platforma">
+                                    {{game.platform}}
                                 </div>
-                                <div>
-                                    Tempo Maximo: {{game.rentalDuration}} dias
+            
+                                <div class="overlay">
+                                    <div>
+                                        Dono: {{game.user.username}}
+                                    </div>
+                                    <div>
+                                        Tempo Maximo: {{game.rentalDuration}} dias
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
 
                     {% endfor %}
                 {% endif %}
