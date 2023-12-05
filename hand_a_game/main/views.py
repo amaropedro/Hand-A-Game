@@ -87,30 +87,33 @@ def addGame_view(request):
         
         if request.method == 'POST':
             name = request.POST['name']
-            # img = request.FILES['img']
-            
-            # with open(os.path.join(settings.MEDIA_ROOT, 'images/games', img.name), 'wb') as destination:
-            #     for chunk in img.chunks():
-            #         destination.write(chunk)
+            img = request.FILES['img']
+
+            with open(os.path.join(settings.MEDIA_ROOT, 'images/games', img.name), 'wb') as destination:
+                for chunk in img.chunks():
+                    destination.write(chunk)
             
             # isPhysical = request.POST['isPhysical']
             # isAvailable = request.POST['isAvailable']
+            # platform = request.POST['platform']
+            # genres = request.POST['genres']
+
             rental = request.POST['rentalDuration']
             price = request.POST['price']
-            #platform = request.POST['platform']
-            #genres = request.POST['genres']
+
             user = request.user
             
-            Game().add_game(title=name,
-                          isPhysical=False, #mudar
-                          cover=None, #mudar
-                          rentalDuration=rental,
-                          price=price,
-                          isAvailable=True, #mudar
-                          platform=Platform.objects.filter(platformName='PS4')[0], #mudar
-                          genres=Genre.objects.all(), #mudar
-                          user=user
-                          )
+            Game().add_game(
+                title=name,
+                isPhysical=False, #mudar
+                cover=img, #mudar
+                rentalDuration=rental,
+                price=price,
+                isAvailable=True, #mudar
+                platform=Platform.objects.filter(platformName='PS4')[0], #mudar
+                genres=Genre.objects.all(), #mudar
+                user=user
+            )
             
             return redirect('myGames')
         

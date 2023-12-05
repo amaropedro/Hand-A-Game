@@ -47,9 +47,12 @@
 
             {% if games_list %}
                     {% for game in games_list %}
+
                         <div class="result-item"
                             style='
-                                background-image: url("{{game.cover.url}}");
+                                {% if game.cover %}
+                                    background-image: url("{{game.cover.url}}");
+                                {% endif %}
                             '
                         >
                             <div class="platforma">

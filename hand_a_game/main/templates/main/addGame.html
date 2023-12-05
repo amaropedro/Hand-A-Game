@@ -56,6 +56,7 @@
             class="cadastro-form-container"
             method="post" 
             action="{% url 'addGame' %}"
+            enctype="multipart/form-data"
             >
                 {% csrf_token %}
 
@@ -69,7 +70,7 @@
                     >
                 </div>
 
-                {% comment %} <div class="">
+                <div class="">
                     <input
                         class=""
                         id="empty"
@@ -77,7 +78,7 @@
                         name="img"
                         accept="image/*"
                     >
-                </div> {% endcomment %}
+                </div>
 
                 {% comment %} é fisico? {% endcomment %}
                 {% comment %} ta disponivel? {% endcomment %}
