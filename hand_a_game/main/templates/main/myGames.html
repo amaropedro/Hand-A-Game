@@ -19,31 +19,49 @@
                 <div class="profile-pic">
                     <img id="logo" src="{% static 'main/images/ProfilePic.png' %}">
                 </div>
-                <div class="sidebar-btn">
+                <a 
+                    class="sidebar-btn"
+                >
                     <img class="icon" src="{% static 'main/images/user_w.png' %}">
                     <div class="text">Perfil</div>
-                </div>
-                <div class="sidebar-btn">
+                </a>
+                <a 
+                    class="sidebar-btn"
+                    href="{% url 'myGames' %}"
+                >
                     <img class="icon" src="{% static 'main/images/jogos.png' %}">
                     <div class="text">Meus Jogos</div>
-                </div>
-                <div class="sidebar-btn">
+                </a>
+                <a 
+                    class="sidebar-btn"
+                >
                     <img class="icon" src="{% static 'main/images/emprestar.png' %}">
                     <div class="text">Emprestados</div>
-                </div>
-                <div class="sidebar-btn" id="current">
+                </a>
+                <a 
+                    class="sidebar-btn"
+                    href="{% url 'home' %}"
+                    id="current"
+                >
                     <img class="icon" src="{% static 'main/images/pesquisa_b.png' %}">
                     <div class="text">Pesquisa</div>
-                </div>
-                <div class="sidebar-btn">
+                </a>
+                <a 
+                    class="sidebar-btn"
+                >
                     <img class="icon" src="{% static 'main/images/notificação.png' %}">
                     <div class="text">Notificações</div>
-                </div>
+                </a>
             </div>
         </div>
 
         <div class="jogos">
-            <div class="new-game-btn" style=' background-image: url({% static 'main/images/plus.svg' %})'></div>
+            <a
+                class="new-game-btn" 
+                style=' background-image: url({% static 'main/images/plus.svg' %})'
+                href="{% url 'addGame' %}"
+            >
+            </a>
 
             {% if games_list %}
                     {% for game in games_list %}
