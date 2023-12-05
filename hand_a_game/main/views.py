@@ -1,9 +1,12 @@
 from django.shortcuts import render
 
-from .models import Game, User, Platform
+from .models import Game, User, Platform, Genre
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+
+import os
+from django.conf import settings
 
 # Create your views here.
 def signup_view(request):
@@ -20,7 +23,8 @@ def signup_view(request):
             email=email, 
             username=username, 
             password=password, 
-            city=city, phone=phone
+            city=city, 
+            phone=phone
         )
         
         # Autentica o usuário
@@ -75,5 +79,45 @@ def myGames_view(request):
         userGames = Game.objects.filter(user=request.user)
         return render(request, 'main/myGames.html', {
             'games_list': userGames
+        })
+    return redirect('login')
+
+def addGame_view(request):
+    if request.user.is_authenticated:
+        
+        if request.method == 'POST':
+            name = request.POST['name']
+            # img = request.FILES['img']
+            
+            # with open(os.path.join(settings.MEDIA_ROOT, 'images/games', img.name), 'wb') as destination:
+            #     for chunk in img.chunks():
+            #         destination.write(chunk)
+            
+            # isPhysical = request.POST['isPhysical']
+            # isAvailable = request.POST['isAvailable']
+            rental = request.POST['rentalDuration']
+            price = request.POST['price']
+            #platform = request.POST['platform']
+            #genres = request.POST['genres']
+            user = request.user
+            
+            Game().add_game(title=name,
+                          isPhysical=False, #mudar
+                          cover=None, #mudar
+                          rentalDuration=rental,
+                          price=price,
+                          isAvailable=True, #mudar
+                          platform=Platform.objects.filter(platformName='PS4')[0], #mudar
+                          genres=Genre.objects.all(), #mudar
+                          user=user
+                          )
+            
+            return redirect('myGames')
+        
+        platforms = Platform.objects.all()
+        genres = Genre.objects.all()
+        return render(request, 'main/addGame.html', {
+            'platforms': platforms,
+            'genres': genres
         })
     return redirect('login')

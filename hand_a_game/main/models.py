@@ -58,6 +58,20 @@ class Game(models.Model):
 
   genres = models.ManyToManyField('Genre')
   
+  def add_game(self, title, isPhysical, cover, rentalDuration, price, isAvailable, platform, genres, user):
+    game = Game()
+    game.title = title
+    game.isRented = False
+    game.isPhysical = isPhysical
+    game.cover = cover
+    game.rentalDuration = rentalDuration
+    game.price = price
+    game.isAvailableToRent = isAvailable
+    game.platform = platform
+    game.user = user
+    game.save()
+    game.genres.set(genres)
+  
   def __str__(self):
     return self.title
 
