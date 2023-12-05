@@ -64,25 +64,37 @@
             >
         </div>
 
-        {% comment %} <div class="fill-item-row">
+       <div class="fill-item-row">
             <div>Plataforma</div>
-            <input 
-                class="fill" 
-                id="empty"
-                type="text"
-                name="platform"
-            >
+            <select name="platform">
+                {% if platforms %}
+                    {% for platform in platforms %}
+                        <option value="{{platform}}">{{platform}}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
         </div>
 
         <div class="fill-item-row">
             <div>Generos</div>
-            <input 
-                class="fill" 
-                id="empty"
-                type="text"
-                name="genre"
-            >
-        </div> {% endcomment %}
+            <select name="genres" multiple>
+                {% if genres %}
+                    {% for genre in genres %}
+                        <option value="{{genre}}">{{genre}}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+
+        <div class="fill-item-row">
+            <label> Está disponivel para alugar? </label>
+            <input type="checkbox" name="isAvailable">
+        </div>
+
+        <div class="fill-item-row">
+            <label> O jogo é fisico? </label>
+            <input type="checkbox" name="isPhysical">
+        </div>
 
         <div class="cadastro-btn">
             <input 

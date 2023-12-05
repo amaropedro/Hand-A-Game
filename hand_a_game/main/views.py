@@ -93,10 +93,10 @@ def addGame_view(request):
                 for chunk in img.chunks():
                     destination.write(chunk)
             
-            # isPhysical = request.POST['isPhysical']
-            # isAvailable = request.POST['isAvailable']
-            # platform = request.POST['platform']
-            # genres = request.POST['genres']
+            isPhysical = request.POST['isPhysical']
+            isAvailable = request.POST['isAvailable']
+            platform = request.POST['platform']
+            genres = request.POST['genres']
 
             rental = request.POST['rentalDuration']
             price = request.POST['price']
@@ -105,13 +105,13 @@ def addGame_view(request):
             
             Game().add_game(
                 title=name,
-                isPhysical=False, #mudar
-                cover=img, #mudar
+                isPhysical=isPhysical, #mudar
+                cover=img,
                 rentalDuration=rental,
                 price=price,
-                isAvailable=True, #mudar
-                platform=Platform.objects.filter(platformName='PS4')[0], #mudar
-                genres=Genre.objects.all(), #mudar
+                isAvailable=isAvailable, #mudar
+                platform=platform, #mudar
+                genres=genres, #mudar
                 user=user
             )
             
