@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand a Game - Meus Jogos</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <div class="side">
+            <div class="sidebar">
+                <div class="profile-pic">
+                    <img id="logo" src="{% static 'main/images/ProfilePic.png' %}">
+                </div>
+                <a 
+                    class="sidebar-btn"
+                >
+                    <img class="icon" src="{% static 'main/images/user_w.png' %}">
+                    <div class="text">Perfil</div>
+                </a>
+                <a 
+                    class="sidebar-btn"
+                    href="{% url 'myGames' %}"
+                >
+                    <img class="icon" src="{% static 'main/images/jogos.png' %}">
+                    <div class="text">Meus Jogos</div>
+                </a>
+                <a 
+                    class="sidebar-btn"
+                >
+                    <img class="icon" src="{% static 'main/images/emprestar.png' %}">
+                    <div class="text">Emprestados</div>
+                </a>
+                <a 
+                    class="sidebar-btn"
+                    href="{% url 'home' %}"
+                    id="current"
+                >
+                    <img class="icon" src="{% static 'main/images/pesquisa_b.png' %}">
+                    <div class="text">Pesquisa</div>
+                </a>
+                <a 
+                    class="sidebar-btn"
+                >
+                    <img class="icon" src="{% static 'main/images/notificação.png' %}">
+                    <div class="text">Notificações</div>
+                </a>
+            </div>
+        </div>
+        
+        {% block content %}
+        {% endblock %}
+
+    </div>
+</body>
+</html>

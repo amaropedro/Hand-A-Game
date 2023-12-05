@@ -1,144 +1,96 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hand a Game - Meus Jogos</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'main/styles.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="app">
-        <div class="side">
-            <div class="sidebar">
-                <div class="profile-pic">
-                    <img id="logo" src="{% static 'main/images/ProfilePic.png' %}">
-                </div>
-                <div class="sidebar-btn">
-                    <img class="icon" src="{% static 'main/images/user_w.png' %}">
-                    <div class="text">Perfil</div>
-                </div>
-                <div class="sidebar-btn">
-                    <img class="icon" src="{% static 'main/images/jogos.png' %}">
-                    <div class="text">Meus Jogos</div>
-                </div>
-                <div class="sidebar-btn">
-                    <img class="icon" src="{% static 'main/images/emprestar.png' %}">
-                    <div class="text">Emprestados</div>
-                </div>
-                <div class="sidebar-btn" id="current">
-                    <img class="icon" src="{% static 'main/images/pesquisa_b.png' %}">
-                    <div class="text">Pesquisa</div>
-                </div>
-                <div class="sidebar-btn">
-                    <img class="icon" src="{% static 'main/images/notificação.png' %}">
-                    <div class="text">Notificações</div>
-                </div>
-            </div>
-        </div>
+{% block content %}
 
-        <div class="jogos">
+<div class="jogos">
 
-            {% comment %} {% for a in genres %}
-                <p> {{ a }} </p>
-            {% endfor %}
+    {% comment %} {% for a in genres %}
+        <p> {{ a }} </p>
+    {% endfor %}
 
-            {% for b in platforms %}
-                <p> {{ b }}</p>
-            {% endfor %} {% endcomment %}
+    {% for b in platforms %}
+        <p> {{ b }}</p>
+    {% endfor %} {% endcomment %}
 
-            <form 
-            class="cadastro-form-container"
-            method="post" 
-            action="{% url 'addGame' %}"
-            enctype="multipart/form-data"
+    <form 
+    class="cadastro-form-container"
+    method="post" 
+    action="{% url 'addGame' %}"
+    enctype="multipart/form-data"
+    >
+        {% csrf_token %}
+
+        <div class="fill-item-row">
+            <div>Nome do Jogo</div>
+            <input 
+                class="fill" 
+                id="empty"
+                type="input"
+                name="name"
             >
-                {% csrf_token %}
-
-                <div class="fill-item-row">
-                    <div>Nome do Jogo</div>
-                    <input 
-                        class="fill" 
-                        id="empty"
-                        type="input"
-                        name="name"
-                    >
-                </div>
-
-                <div class="">
-                    <input
-                        class=""
-                        id="empty"
-                        type="file"
-                        name="img"
-                        accept="image/*"
-                    >
-                </div>
-
-                {% comment %} é fisico? {% endcomment %}
-                {% comment %} ta disponivel? {% endcomment %}
-
-                <div class="fill-item-row">
-                    <div>Duração Máxima de Aluguel</div>
-                    <input 
-                        class="fill" 
-                        id="empty"
-                        type="number"
-                        name="rentalDuration"
-                    >
-                </div>
-       
-                <div class="fill-item-row">
-                    <div>Preço</div>
-                    <input 
-                        class="fill" 
-                        id="empty"
-                        type="number"
-                        name="price"
-                    >
-                </div>
-
-                {% comment %} <div class="fill-item-row">
-                    <div>Plataforma</div>
-                    <input 
-                        class="fill" 
-                        id="empty"
-                        type="text"
-                        name="platform"
-                    >
-                </div>
-
-                <div class="fill-item-row">
-                    <div>Generos</div>
-                    <input 
-                        class="fill" 
-                        id="empty"
-                        type="text"
-                        name="genre"
-                    >
-                </div> {% endcomment %}
-
-                <div class="cadastro-btn">
-                    <input 
-                        type="submit" 
-                        value="Adicionar Jogo"
-                    >
-                </div>
-            </form>
         </div>
 
-    </div>
-</body>
+        <div class="">
+            <input
+                class=""
+                id="empty"
+                type="file"
+                name="img"
+                accept="image/*"
+            >
+        </div>
 
-<script>
-    {% if erro %}
-        alert("{{erro}}");
-    {% endif %}
-</script>
+        {% comment %} é fisico? {% endcomment %}
+        {% comment %} ta disponivel? {% endcomment %}
 
-</html>
+        <div class="fill-item-row">
+            <div>Duração Máxima de Aluguel</div>
+            <input 
+                class="fill" 
+                id="empty"
+                type="number"
+                name="rentalDuration"
+            >
+        </div>
+
+        <div class="fill-item-row">
+            <div>Preço</div>
+            <input 
+                class="fill" 
+                id="empty"
+                type="number"
+                name="price"
+            >
+        </div>
+
+        {% comment %} <div class="fill-item-row">
+            <div>Plataforma</div>
+            <input 
+                class="fill" 
+                id="empty"
+                type="text"
+                name="platform"
+            >
+        </div>
+
+        <div class="fill-item-row">
+            <div>Generos</div>
+            <input 
+                class="fill" 
+                id="empty"
+                type="text"
+                name="genre"
+            >
+        </div> {% endcomment %}
+
+        <div class="cadastro-btn">
+            <input 
+                type="submit" 
+                value="Adicionar Jogo"
+            >
+        </div>
+    </form>
+</div>
+
+{% endblock %}
