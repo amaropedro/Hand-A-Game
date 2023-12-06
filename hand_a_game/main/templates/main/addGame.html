@@ -3,16 +3,7 @@
 
 {% block content %}
 
-<div class="jogos">
-
-    {% comment %} {% for a in genres %}
-        <p> {{ a }} </p>
-    {% endfor %}
-
-    {% for b in platforms %}
-        <p> {{ b }}</p>
-    {% endfor %} {% endcomment %}
-
+<div class="jogos" style="justify-content: center">
     <form 
     class="cadastro-form-container"
     method="post" 
@@ -21,7 +12,7 @@
     >
         {% csrf_token %}
 
-        <div class="fill-item-row">
+        <div class="fill-row">
             <div>Nome do Jogo</div>
             <input 
                 class="fill" 
@@ -31,40 +22,41 @@
             >
         </div>
 
-        <div class="">
+        <div class="fill-row">
+            <div>Capa</div>
             <input
                 class=""
-                id="empty"
+                id="id_image"
                 type="file"
                 name="img"
                 accept="image/*"
             >
         </div>
 
-        {% comment %} é fisico? {% endcomment %}
-        {% comment %} ta disponivel? {% endcomment %}
-
-        <div class="fill-item-row">
+        <div class="fill-row">
             <div>Duração Máxima de Aluguel</div>
             <input 
                 class="fill" 
                 id="empty"
                 type="number"
                 name="rentalDuration"
+                placeholder="Ex: 60"
             >
+            <div>Dias</div>
         </div>
 
-        <div class="fill-item-row">
+        <div class="fill-row">
             <div>Preço</div>
             <input 
                 class="fill" 
                 id="empty"
                 type="number"
                 name="price"
+                placeholder="Ex: 1.50"
             >
         </div>
 
-       <div class="fill-item-row">
+       <div class="fill-row">
             <div>Plataforma</div>
             <select name="platform">
                 {% if platforms %}
@@ -75,7 +67,7 @@
             </select>
         </div>
 
-        <div class="fill-item-row">
+        <div class="fill-row">
             <div>Generos</div>
             <select name="genres" multiple>
                 {% if genres %}
@@ -86,23 +78,58 @@
             </select>
         </div>
 
-        <div class="fill-item-row">
+        <div class="fill-row">
+            Para as opções abaixo, selecione a caixa para aquelas que se aplicam a seu jogo:
+        </div>
+
+        <div class="fill-row">
             <label> Está disponivel para alugar? </label>
             <input type="checkbox" name="isAvailable">
         </div>
 
-        <div class="fill-item-row">
+        <div class="fill-row">
             <label> O jogo é fisico? </label>
             <input type="checkbox" name="isPhysical">
         </div>
 
         <div class="cadastro-btn">
             <input 
+                class="destaque-btn"
                 type="submit" 
                 value="Adicionar Jogo"
             >
         </div>
     </form>
+
+    <div class="preview">
+        Preview Da Foto da Capa:
+        <p id="image-preview-text">Nenhuma Foto selecionada</p>
+        <img id="image-preview" src="#" alt="Image Preview" style="max-width: 100%; max-height: 200px;">
+    </div>
 </div>
+
+<script>
+    function previewImage(input) {
+        var preview = document.getElementById('image-preview');
+        var previewText = document.getElementById('image-preview-text');
+        previewText.style.display = 'none'
+        preview.style.display = 'block';
+        var file = input.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    document.getElementById('id_image').onchange = function () {
+        previewImage(this);
+    };
+
+    var imagePreview = document.getElementById('image-preview');
+    imagePreview.style.display = 'none';
+</script>
 
 {% endblock %}
