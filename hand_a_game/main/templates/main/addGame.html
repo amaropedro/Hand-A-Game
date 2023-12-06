@@ -5,92 +5,15 @@
 
 <div class="jogos" style="justify-content: center">
     <form 
-    class="cadastro-form-container"
-    method="post" 
-    action="{% url 'addGame' %}"
-    enctype="multipart/form-data"
+        class="cadastro-form-container"
+        method="post" 
+        action="{% url 'addGame' %}"
+        enctype="multipart/form-data"
     >
         {% csrf_token %}
 
-        <div class="fill-row">
-            <div>Nome do Jogo</div>
-            <input 
-                class="fill" 
-                id="empty"
-                type="input"
-                name="name"
-            >
-        </div>
+        {{ form }}
 
-        <div class="fill-row">
-            <div>Capa</div>
-            <input
-                class=""
-                id="id_image"
-                type="file"
-                name="img"
-                accept="image/*"
-            >
-        </div>
-
-        <div class="fill-row">
-            <div>Duração Máxima de Aluguel</div>
-            <input 
-                class="fill" 
-                id="empty"
-                type="number"
-                name="rentalDuration"
-                placeholder="Ex: 60"
-            >
-            <div>Dias</div>
-        </div>
-
-        <div class="fill-row">
-            <div>Preço</div>
-            <input 
-                class="fill" 
-                id="empty"
-                type="number"
-                name="price"
-                placeholder="Ex: 1.50"
-            >
-        </div>
-
-       <div class="fill-row">
-            <div>Plataforma</div>
-            <select name="platform">
-                {% if platforms %}
-                    {% for platform in platforms %}
-                        <option value="{{platform}}">{{platform}}</option>
-                    {% endfor %}
-                {% endif %}
-            </select>
-        </div>
-
-        <div class="fill-row">
-            <div>Generos</div>
-            <select name="genres" multiple>
-                {% if genres %}
-                    {% for genre in genres %}
-                        <option value="{{genre}}">{{genre}}</option>
-                    {% endfor %}
-                {% endif %}
-            </select>
-        </div>
-
-        <div class="fill-row">
-            Para as opções abaixo, selecione a caixa para aquelas que se aplicam a seu jogo:
-        </div>
-
-        <div class="fill-row">
-            <label> Está disponivel para alugar? </label>
-            <input type="checkbox" name="isAvailable">
-        </div>
-
-        <div class="fill-row">
-            <label> O jogo é fisico? </label>
-            <input type="checkbox" name="isPhysical">
-        </div>
 
         <div class="cadastro-btn">
             <input 
@@ -103,33 +26,31 @@
 
     <div class="preview">
         Preview Da Foto da Capa:
-        <p id="image-preview-text">Nenhuma Foto selecionada</p>
-        <img id="image-preview" src="#" alt="Image Preview" style="max-width: 100%; max-height: 200px;">
+        <img id="image-preview" src="#" alt="Image Preview" style="display: none;">
     </div>
 </div>
 
 <script>
-    function previewImage(input) {
-        var preview = document.getElementById('image-preview');
-        var previewText = document.getElementById('image-preview-text');
-        previewText.style.display = 'none'
-        preview.style.display = 'block';
-        var file = input.files[0];
-        var reader = new FileReader();
+    // Image preview script
+    $(document).ready(function() {
+        // Triggered when a file is selected
+        $('input[type="file"]').change(function() {
+            readURL(this);
+        });
+    });
 
-        reader.onload = function (e) {
-            preview.src = e.target.result;
-        };
+    // Function to display image preview
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-        reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                $('#image-preview').attr('src', e.target.result).show();
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
     }
-
-    document.getElementById('id_image').onchange = function () {
-        previewImage(this);
-    };
-
-    var imagePreview = document.getElementById('image-preview');
-    imagePreview.style.display = 'none';
 </script>
 
 {% endblock %}

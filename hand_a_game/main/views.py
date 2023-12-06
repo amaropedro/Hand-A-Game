@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from .models import Game, User, Platform, Genre
+from .forms import AddGameForm
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -93,41 +94,45 @@ def addGame_view(request):
     if request.user.is_authenticated:
         
         if request.method == 'POST':
-            name = request.POST['name']
-            img = request.FILES['img']
+            form = AddGameForm(request.POST, request.FILES)
+            print(form)
+            if form.is_valid():            
+                img = form.cleaned_data['img']
 
-            with open(os.path.join(settings.MEDIA_ROOT, 'images/games', img.name), 'wb') as destination:
-                for chunk in img.chunks():
-                    destination.write(chunk)
-            
-            isPhysical = request.POST['isPhysical']
-            isAvailable = request.POST['isAvailable']
-            platform = request.POST['platform']
-            genres = request.POST['genres']
-
-            rental = request.POST['rentalDuration']
-            price = request.POST['price']
-
-            user = request.user
-            
-            Game().add_game(
-                title=name,
-                isPhysical=isPhysical, #mudar
-                cover=img,
-                rentalDuration=rental,
-                price=price,
-                isAvailable=isAvailable, #mudar
-                platform=platform, #mudar
-                genres=genres, #mudar
-                user=user
-            )
-            
-            return redirect('myGames')
+                with open(os.path.join(settings.MEDIA_ROOT, 'images/games', img.name), 'wb') as destination:
+                    for chunk in img.chunks():
+                        destination.write(chunk)
+                
+                platform = Platform.objects.filter(id=form.cleaned_data['platform'])[0]
+                
+                
+                Game().add_game(
+                    title=form.cleaned_data['name'],
+                    isPhysical=form.cleaned_data['isPhysical'],
+                    cover=img,
+                    rentalDuration=form.cleaned_data['rental'],
+                    price=form.cleaned_data['price'],
+                    isAvailable=form.cleaned_data['isAvailable'],
+                    platform=platform,
+                    genres=form.cleaned_data['genres'],
+                    user=request.user
+                )
+                
+                return redirect('myGames')
+        else:
+            form = AddGameForm()
         
         platforms = Platform.objects.all()
         genres = Genre.objects.all()
         return render(request, 'main/addGame.html', {
             'platforms': platforms,
-            'genres': genres
+            'genres': genres,
+            'form' : form
         })
     return redirect('login')
+
+def editGame_view(request, id):
+    print('edit')
+
+def delete_view(request, id):
+    print('del')
