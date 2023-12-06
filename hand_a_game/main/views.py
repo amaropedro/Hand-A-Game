@@ -3,7 +3,7 @@ from django.shortcuts import render
 from .models import Game, User, Platform, Genre
 
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 import os
 from django.conf import settings
@@ -37,6 +37,9 @@ def signup_view(request):
     return render(request, 'main/signup.html')
         
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     if request.method == 'POST':
         # Recupera os dados do formulário do request
         email = request.POST['email']
@@ -61,6 +64,10 @@ def login_view(request):
             })
 
     # Se o método da requisição não for POST, apenas renderize o formulário de login
+    return render(request, 'main/login.html')
+
+def logout_view(request):
+    logout(request)
     return render(request, 'main/login.html')
 
 def home_view(request):
