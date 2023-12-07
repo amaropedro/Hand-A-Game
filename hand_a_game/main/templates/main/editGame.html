@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="jogos" style="justify-content: center">
+
+    {{ game }}
+
+    <form 
+        class="cadastro-form-container"
+        method="post" 
+        action="{% url 'addGame' %}"
+        enctype="multipart/form-data"
+    >
+        {% csrf_token %}
+
+        {{ form }}
+
+        <a href="{% url 'delete' game.id %}">
+            Excluir jogo
+        </a>
+
+        <div class="cadastro-btn">
+            <input 
+                class="destaque-btn"
+                type="submit" 
+                value="Salvar edições"
+            >
+        </div>
+    </form>
+
+    <div class="preview">
+        Preview Da Foto da Capa:
+        <img id="image-preview" src="#" alt="Image Preview" style="display: none;">
+    </div>
+</div>
+
+<script>
+    // Image preview script
+    $(document).ready(function() {
+        // Triggered when a file is selected
+        $('input[type="file"]').change(function() {
+            readURL(this);
+        });
+    });
+
+    // Function to display image preview
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#image-preview').attr('src', e.target.result).show();
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+{% endblock %}

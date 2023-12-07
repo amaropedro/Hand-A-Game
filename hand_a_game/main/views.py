@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from django.shortcuts import get_object_or_404
+
 from .models import Game, User, Platform, Genre
 from .forms import AddGameForm
 
@@ -132,7 +134,21 @@ def addGame_view(request):
     return redirect('login')
 
 def editGame_view(request, id):
-    print('edit')
+
+    game = Game.objects.filter(id=id)[0]
+    print(game)
+    form = AddGameForm()
+
+    return render(request, 'main/editGame.html', {
+        'game': game,
+        'form': form
+    })
 
 def delete_view(request, id):
-    print('del')
+
+    # Recupera o objeto (registro) do banco de dados
+    game = get_object_or_404(Game, id=id)
+    # Exclui o objeto do banco de dados
+    game.delete()
+
+    return redirect('myGames')

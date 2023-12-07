@@ -73,7 +73,7 @@ class Game(models.Model):
     game.genres.set(genres)
   
   def __str__(self):
-    return self.title
+    return f"{self.id}: {self.title}"
 
 class Genre(models.Model):
   genreName = models.CharField(max_length=200)
