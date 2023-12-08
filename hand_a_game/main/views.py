@@ -3,16 +3,11 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
-from django.urls import reverse
-
 from .models import Game, User, Platform, Genre
 from .forms import AddGameForm, EditUserForm
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-
-import os
-from django.conf import settings
 
 # Create your views here.
 def signup_view(request):
@@ -108,16 +103,8 @@ def addGame_view(request):
             if form.is_valid():            
                 img = form.cleaned_data['img']
 
-                with open(
-                    os.path.join(settings.MEDIA_ROOT, 'images/games', img.name),
-                    'wb'
-                ) as destination:
-                    for chunk in img.chunks():
-                        destination.write(chunk)
-                
                 platform = Platform.objects.filter(id=form.cleaned_data['platform'])[0]
-                
-                
+                                
                 Game().add_game(
                     title=form.cleaned_data['name'],
                     isPhysical=form.cleaned_data['isPhysical'],
@@ -151,13 +138,6 @@ def editGame_view(request, id):
 
             if form.is_valid():            
                 img = form.cleaned_data['img']
-
-                with open(
-                    os.path.join(settings.MEDIA_ROOT, 'images/games', img.name),
-                    'wb'
-                ) as destination:
-                    for chunk in img.chunks():
-                        destination.write(chunk)
 
                 platform = Platform.objects.filter(id=form.cleaned_data['platform'])[0]
                 
