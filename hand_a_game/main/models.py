@@ -120,6 +120,16 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
   if not instance.pk:
     return False
 
+  try:
+    old_file = Game.objects.get(pk=instance.pk).cover
+  except Game.DoesNotExist:
+    return False
+
+  new_file = instance.cover
+  if not old_file == new_file:
+    if os.path.isfile(old_file.path):
+      os.remove(old_file.path)
+
 class Genre(models.Model):
   genreName = models.CharField(max_length=200)
   
