@@ -6,7 +6,7 @@
 <div class="jogos" style="justify-content: center">
 
     <form 
-        class="cadastro-form-container"
+        class="game-form-container"
         method="post" 
         action="{% url 'editGame' game.id %}"
         enctype="multipart/form-data"
@@ -15,16 +15,20 @@
 
         {{ form }}
 
-        <a href="{% url 'delete' game.id %}">
-            Excluir jogo
-        </a>
+        <div style="width: 100%; display: flex; justify-content: center">
+            <a href="{% url 'delete' game.id %}">
+                Excluir jogo
+            </a>
+        </div>
 
-        <div class="cadastro-btn">
-            <input 
-                class="destaque-btn"
-                type="submit" 
-                value="Salvar edições"
-            >
+        <div style="width: 100%; display: flex; justify-content: center">
+            <div class="cadastro-btn">
+                <input 
+                    class="destaque-btn"
+                    type="submit" 
+                    value="Salvar edições"
+                >
+            </div>
         </div>
     </form>
 

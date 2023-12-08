@@ -133,6 +133,33 @@ input:focus{
     background-color: #353535;
 }
 
+.game-form-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    color: white;
+    width: 60%;
+    height: 70%;
+    border-radius: 15px;
+    background-color: #353535;
+    flex-wrap: wrap;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.game-form-container label{
+    width: 30%;
+}
+
+.game-form-container input{
+    width: 60%;
+}
+
+.game-form-container a{
+    display: none;
+}
+
 #empty{
     display: flex;
     width: 80%;

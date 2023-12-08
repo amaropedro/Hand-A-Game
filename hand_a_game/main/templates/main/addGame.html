@@ -5,7 +5,7 @@
 
 <div class="jogos" style="justify-content: center">
     <form 
-        class="cadastro-form-container"
+        class="game-form-container"
         method="post" 
         action="{% url 'addGame' %}"
         enctype="multipart/form-data"
@@ -15,12 +15,14 @@
         {{ form }}
 
 
-        <div class="cadastro-btn">
-            <input 
-                class="destaque-btn"
-                type="submit" 
-                value="Adicionar Jogo"
-            >
+        <div style="width: 100%; display: flex; justify-content: center">
+            <div class="cadastro-btn">
+                <input 
+                    class="destaque-btn"
+                    type="submit" 
+                    value="Adicionar Jogo"
+                >
+            </div>
         </div>
     </form>
 
