@@ -341,12 +341,19 @@ input:focus{
     background-color: #353535;
     border-radius: 15px;
     height: 300px;
+    width: 255px;
     padding: 1%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     gap: 1rem;
+}
+
+#image-preview {
+    width: 200px;
+    height: 250px;
+    object-fit: cover;
 }
 
 .new-game-btn{
