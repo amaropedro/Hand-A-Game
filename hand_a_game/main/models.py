@@ -78,7 +78,7 @@ class Game(models.Model):
 
   def edit_game(self,
     title, isPhysical, cover, rentalDuration, 
-    price, isAvailable, platform, genres, user
+    price, isAvailable, platform, genres
   ):
     self.title = title
     self.isPhysical = isPhysical

@@ -105,7 +105,6 @@ def addGame_view(request):
         
         if request.method == 'POST':
             form = AddGameForm(request.POST, request.FILES)
-            print(form)
             if form.is_valid():            
                 img = form.cleaned_data['img']
 
@@ -149,7 +148,6 @@ def editGame_view(request, id):
 
         if request.method == 'POST':
             form = AddGameForm(request.POST, request.FILES)
-            print(form)
 
             if form.is_valid():            
                 img = form.cleaned_data['img']
@@ -160,7 +158,7 @@ def editGame_view(request, id):
                 ) as destination:
                     for chunk in img.chunks():
                         destination.write(chunk)
-                
+
                 platform = Platform.objects.filter(id=form.cleaned_data['platform'])[0]
                 
                 game = Game.objects.filter(id=id)[0]
@@ -177,20 +175,18 @@ def editGame_view(request, id):
 
                 return redirect('myGames')
 
+            else:
+                print("Formulário não é válido!")
+
         try:
             game = get_object_or_404(Game, id=id)
-
             if game.user == request.user:
             
                 form = AddGameForm(initial={
                     'name': game.title,
-                    'img': game.cover,
                     'rental': game.rentalDuration,
                     'price': game.price,
                     'platform': game.platform,
-
-                    # Não funciona
-                    # 'genres': game.genres.get()[0], 
 
                     'isAvailable': game.isAvailableToRent,
                     'isPhysical': game.isPhysical,
