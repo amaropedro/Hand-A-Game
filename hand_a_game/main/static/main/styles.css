@@ -139,6 +139,13 @@ input:focus{
     background-color: #353535;
 }
 
+.form-division-line{
+    background-color: gray;
+    border-radius: 15px;
+    height: 2px;
+    width: 100%;
+}
+
 .game-form-container{
     display: flex;
     align-items: center;
@@ -354,6 +361,23 @@ input:focus{
     width: 200px;
     height: 250px;
     object-fit: cover;
+}
+
+.delete-game {
+    width: 100%; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.delete-game a {
+    color: white;
+    text-decoration: none;
+}
+
+.delete-game a:hover {
+    text-decoration: underline;
 }
 
 .new-game-btn{
