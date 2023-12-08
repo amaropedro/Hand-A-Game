@@ -13,7 +13,19 @@
     >
         {% csrf_token %}
 
-        {{ form }}
+        {% for field in form %}
+            <div class="game-form-group">
+                {% if field.id_for_label == "id_img"%}
+                    <div class="game-img-field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% else %}
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                {% endif %}
+            </div>
+        {% endfor %}
 
         <div style="width: 100%; display: flex; justify-content: center">
             <a href="{% url 'delete' game.id %}">

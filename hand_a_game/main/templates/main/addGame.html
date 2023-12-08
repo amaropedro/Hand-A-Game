@@ -12,7 +12,12 @@
     >
         {% csrf_token %}
 
-        {{ form }}
+        {% for field in form %}
+            <div class="game-form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+            </div>
+        {% endfor %}
 
 
         <div style="width: 100%; display: flex; justify-content: center">

@@ -140,7 +140,7 @@ input:focus{
     flex-direction: row;
     color: white;
     width: 60%;
-    height: 70%;
+    min-height: 70%;
     border-radius: 15px;
     background-color: #353535;
     flex-wrap: wrap;
@@ -148,16 +148,33 @@ input:focus{
     gap: 1rem;
 }
 
-.game-form-container label{
+.game-form-group{
+    width: 100%;
+    display: flex;
+    align-self: center;
+}
+
+.game-form-group br{
+    width: 100%;
+}
+
+.game-form-group label{
     width: 30%;
 }
 
-.game-form-container input{
+.game-form-group input{
     width: 60%;
 }
 
-.game-form-container a{
-    display: none;
+.game-img-field{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.game-img-field label{
+    width: 100%;
 }
 
 #empty{
