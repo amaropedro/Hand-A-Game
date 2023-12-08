@@ -82,6 +82,12 @@ input:focus{
     width: 200px;
     height: 30px;
     border: none;
+    cursor: pointer;
+}
+
+.destaque-btn:hover{
+    text-decoration: underline;
+    background-color: #1a607e;
 }
 
 .cadastro-container{

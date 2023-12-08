@@ -14,7 +14,7 @@ class AddGameForm(forms.Form):
     isPhysical = forms.BooleanField(label="É fisico?", required=False)
     
 class EditUserForm(forms.Form):
-    name = forms.CharField(label="Nome", max_length=200)
+    name = forms.CharField(label="Nome de usuário", max_length=200)
     email = forms.EmailField(label="Email")
     city = forms.CharField(label="Cidade", max_length=200)
     phone = forms.CharField(label="Telefone", max_length=200)

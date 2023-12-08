@@ -206,7 +206,14 @@ def delete_view(request, id):
 def editUser_view(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            pass
+            form = EditUserForm(request.POST)
+            
+            if form.is_valid():
+                request.user.edit_user(
+                    name = form.cleaned_data['name'],
+                    city = form.cleaned_data['city'],
+                    phone = form.cleaned_data['phone'],
+                )
 
         form = EditUserForm(initial={
             'name': request.user.username,
