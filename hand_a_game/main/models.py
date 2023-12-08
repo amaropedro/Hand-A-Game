@@ -1,6 +1,12 @@
 from django.db import models
 from django.utils import timezone
 
+import os
+
+from django.db import models
+from django.dispatch import receiver
+from django.utils.translation import ugettext_lazy as _
+
 # Create your models here.
 import datetime
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -90,10 +96,29 @@ class Game(models.Model):
     self.save()
     
     self.genres.set(genres)
-
   
   def __str__(self):
     return f"{self.id}: {self.title}"
+
+@receiver(models.signals.post_delete, sender=Game)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+  """
+  Deletes file from filesystem
+  when corresponding `MediaFile` object is deleted.
+  """
+  if instance.cover:
+    if os.path.isfile(instance.cover.path):
+      os.remove(instance.cover.path)
+
+@receiver(models.signals.pre_save, sender=Game)
+def auto_delete_file_on_change(sender, instance, **kwargs):
+  """
+  Deletes old file from filesystem
+  when corresponding `MediaFile` object is updated
+  with new file.
+  """
+  if not instance.pk:
+    return False
 
 class Genre(models.Model):
   genreName = models.CharField(max_length=200)
