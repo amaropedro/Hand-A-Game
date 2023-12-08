@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
-from .models import Game, User, Platform, Genre
+from .models import Game, User, Platform, Genre, RentalManager
 from .forms import AddGameForm, EditUserForm
 
 from django.shortcuts import render, redirect
@@ -225,4 +225,15 @@ def editUser_view(request):
         return render(request, 'main/editUser.html', {
             'form': form
         })
+    return redirect('login')
+
+def searchGame_view(request):
+    pass
+
+def borrow_view(request, id):
+    if request.user.is_authenticated:
+        game = get_object_or_404(Game, id=id)
+        RentalManager.borrowGame(user=request.user, game=game)
+
+        return redirect('home')
     return redirect('login')

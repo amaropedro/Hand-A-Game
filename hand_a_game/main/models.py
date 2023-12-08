@@ -102,6 +102,10 @@ class Game(models.Model):
     self.save()
     
     self.genres.set(genres)
+
+  def set_rented(self, value:bool):
+    self.isRented = value
+    self.save()
   
   def __str__(self):
     return f"{self.id}: {self.title}"
@@ -148,8 +152,19 @@ class RentalManager(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   game = models.ForeignKey(Game, on_delete=models.CASCADE)
 
+  def borrowGame(user, game):
+    rental = RentalManager()
+    rental.user = user
+    rental.game = game
+    rental.initialDate = datetime.datetime.now()
+    rental.save()
+
+    game.set_rented(True)
+
+
   def __str__(self):
     return f"Jogo {self.game} alugado por {self.user} em {self.initialDate}"
+  
   
 class Notification(models.Model):
   content = models.CharField(max_length=4999)

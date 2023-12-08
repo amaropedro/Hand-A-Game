@@ -12,4 +12,5 @@ urlpatterns = [
   path('edit_game/<int:id>', views.editGame_view, name="editGame"),
   path('delete/<int:id>', views.delete_view, name="delete"),
   path('editUser', views.editUser_view, name="editUser"),
+  path('borrow/<int:id>', views.borrow_view, name="borrow"),
 ]

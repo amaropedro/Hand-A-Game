@@ -15,8 +15,17 @@
                 class="icon-pesquisa" 
                 src="{% static 'main/images/pesquisa.png' %}"
             >
-            <form class="barra-pesquisa">
+            <form 
+                class="barra-pesquisa"
+                method="post" 
+                action="{% url 'home' %}"
+            >
                 <input class="fill" id="pesquisa">
+                <input 
+                    class="destaque-btn"
+                    type="submit" 
+                    value="Pesquisar"
+                >
             </form> 
         </div>
 
@@ -57,7 +66,7 @@
 
         {% if games_list %}
             {% for game in games_list %}
-                {% if game.isAvailableToRent %}
+                {% if game.isAvailableToRent and not game.isRented %}
                     <div class="result-item"
                         style='
                             background-image: url("{{game.cover.url}}");
@@ -67,7 +76,10 @@
                             {{game.platform}}
                         </div>
     
+                        
                         <div class="overlay">
+                            <a href="{% url 'borrow' game.id %}">Pegar emprestado</a>
+
                             <div>
                                 Dono: {{game.user.username}}
                             </div>

@@ -389,6 +389,8 @@ input:focus{
     width: 100%;
     background-color:  #140F0F;
     border-radius: 15px;
+
+    border: 1px solid red;
 }
 
 .barra-pesquisa{
