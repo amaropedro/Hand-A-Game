@@ -137,52 +137,68 @@ def addGame_view(request):
     return redirect('login')
 
 def editGame_view(request, id):
+    if request.user.is_authenticated:
 
-    if request.method == 'POST':
-        form = AddGameForm(request.POST, request.FILES)
-        print(form)
+        if request.method == 'POST':
+            form = AddGameForm(request.POST, request.FILES)
+            print(form)
 
-        if form.is_valid():            
-            img = form.cleaned_data['img']
+            if form.is_valid():            
+                img = form.cleaned_data['img']
 
-            with open(
-                os.path.join(settings.MEDIA_ROOT, 'images/games', img.name),
-                'wb'
-            ) as destination:
-                for chunk in img.chunks():
-                    destination.write(chunk)
-            
-            platform = Platform.objects.filter(id=form.cleaned_data['platform'])[0]
-            
-            game = Game.objects.filter(id=id)[0]
-            game.edit_game(
-                title=form.cleaned_data['name'],
-                isPhysical=form.cleaned_data['isPhysical'],
-                cover=img,
-                rentalDuration=form.cleaned_data['rental'],
-                price=form.cleaned_data['price'],
-                isAvailable=form.cleaned_data['isAvailable'],
-                platform=platform,
-                genres=form.cleaned_data['genres'],
-                user=request.user
-            )
+                with open(
+                    os.path.join(settings.MEDIA_ROOT, 'images/games', img.name),
+                    'wb'
+                ) as destination:
+                    for chunk in img.chunks():
+                        destination.write(chunk)
+                
+                platform = Platform.objects.filter(id=form.cleaned_data['platform'])[0]
+                
+                game = Game.objects.filter(id=id)[0]
+                game.edit_game(
+                    title=form.cleaned_data['name'],
+                    isPhysical=form.cleaned_data['isPhysical'],
+                    cover=img,
+                    rentalDuration=form.cleaned_data['rental'],
+                    price=form.cleaned_data['price'],
+                    isAvailable=form.cleaned_data['isAvailable'],
+                    platform=platform,
+                    genres=form.cleaned_data['genres'],
+                    user=request.user
+                )
 
-            return redirect('myGames')
+                return redirect('myGames')
 
-    game = Game.objects.filter(id=id)[0]
-    print(game)
-    form = AddGameForm()
+        game = Game.objects.filter(id=id)[0]
+        
+        form = AddGameForm(initial={
+            'name': game.title,
+            'img': game.cover,
+            'rental': game.rentalDuration,
+            'price': game.price,
+            'platform': game.platform,
 
-    return render(request, 'main/editGame.html', {
-        'game': game,
-        'form': form
-    })
+            # Não funciona
+            # 'genres': game.genres.get()[0], 
+
+            'isAvailable': game.isAvailableToRent,
+            'isPhysical': game.isPhysical,
+        })
+
+        return render(request, 'main/editGame.html', {
+            'game': game,
+            'form': form
+        })
+    return redirect('login')
 
 def delete_view(request, id):
+    if request.user.is_authenticated:
 
-    # Recupera o objeto (registro) do banco de dados
-    game = get_object_or_404(Game, id=id)
-    # Exclui o objeto do banco de dados
-    game.delete()
+        # Recupera o objeto (registro) do banco de dados
+        game = get_object_or_404(Game, id=id)
+        # Exclui o objeto do banco de dados
+        game.delete()
 
-    return redirect('myGames')
+        return redirect('myGames')
+    return redirect('login')
