@@ -81,14 +81,12 @@ class Game(models.Model):
     price, isAvailable, platform, genres, user
   ):
     self.title = title
-    self.isRented = False
     self.isPhysical = isPhysical
     self.cover = cover
     self.rentalDuration = rentalDuration
     self.price = price
     self.isAvailableToRent = isAvailable
     self.platform = platform
-    self.user = user
     self.save()
     
     self.genres.set(genres)

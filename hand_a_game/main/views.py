@@ -1,6 +1,9 @@
 from django.shortcuts import render
 
 from django.shortcuts import get_object_or_404
+from django.http import Http404
+
+from django.urls import reverse
 
 from .models import Game, User, Platform, Genre
 from .forms import AddGameForm
@@ -86,10 +89,15 @@ def home_view(request):
 
 def myGames_view(request):
     if request.user.is_authenticated:
+
+        erro = request.session.pop('error_in_delete', '')
+
         userGames = Game.objects.filter(user=request.user)
         return render(request, 'main/myGames.html', {
-            'games_list': userGames
+            'games_list': userGames,
+            'erro': erro
         })
+    
     return redirect('login')
 
 def addGame_view(request):
@@ -165,40 +173,56 @@ def editGame_view(request, id):
                     isAvailable=form.cleaned_data['isAvailable'],
                     platform=platform,
                     genres=form.cleaned_data['genres'],
-                    user=request.user
                 )
 
                 return redirect('myGames')
 
-        game = Game.objects.filter(id=id)[0]
-        
-        form = AddGameForm(initial={
-            'name': game.title,
-            'img': game.cover,
-            'rental': game.rentalDuration,
-            'price': game.price,
-            'platform': game.platform,
+        try:
+            game = get_object_or_404(Game, id=id)
 
-            # Não funciona
-            # 'genres': game.genres.get()[0], 
+            if game.user == request.user:
+            
+                form = AddGameForm(initial={
+                    'name': game.title,
+                    'img': game.cover,
+                    'rental': game.rentalDuration,
+                    'price': game.price,
+                    'platform': game.platform,
 
-            'isAvailable': game.isAvailableToRent,
-            'isPhysical': game.isPhysical,
-        })
+                    # Não funciona
+                    # 'genres': game.genres.get()[0], 
 
-        return render(request, 'main/editGame.html', {
-            'game': game,
-            'form': form
-        })
+                    'isAvailable': game.isAvailableToRent,
+                    'isPhysical': game.isPhysical,
+                })
+
+                return render(request, 'main/editGame.html', {
+                    'game': game,
+                    'form': form
+                })
+            else:
+                return redirect('myGames')
+
+        except Http404:
+            request.session['error_in_delete'] = 'O jogo não foi encontrado!'
+            return redirect('myGames')
+
     return redirect('login')
 
 def delete_view(request, id):
     if request.user.is_authenticated:
 
-        # Recupera o objeto (registro) do banco de dados
-        game = get_object_or_404(Game, id=id)
-        # Exclui o objeto do banco de dados
-        game.delete()
+        try:
+            # Recupera o objeto (registro) do banco de dados
+            game = get_object_or_404(Game, id=id)
+
+            if game.user == request.user:
+                # Exclui o objeto do banco de dados
+                game.delete()
+
+        except Http404:
+            request.session['error_in_delete'] = 'O jogo não foi encontrado!'
+            return redirect('myGames')
 
         return redirect('myGames')
     return redirect('login')
