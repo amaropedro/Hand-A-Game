@@ -26,9 +26,12 @@
                     </div>
 
                     <div class="overlay">
-                        <a href="edit_game/{{ game.id }}">
-                            Editar
-                        </a>
+                        <div class="edit">
+                            <img src="{% static 'main/images/pencil-line.svg' %}">
+                            <a href="edit_game/{{ game.id }}">
+                                Editar
+                            </a>
+                        </div>
                         <div>
                             Nome: {{game.title}}
                             <br>

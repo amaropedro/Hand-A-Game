@@ -234,6 +234,11 @@ input:focus{
     background-position: bottom;
 }
 
+.sidebar a {
+    color: white;
+    text-decoration: none;
+}
+
 .profile-pic{
     display: flex;
     justify-content: center;
@@ -482,6 +487,29 @@ input:focus{
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
+}
+
+.edit{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    
+    cursor: pointer;
+}
+
+.edit :hover {
+    text-decoration: underline;
+}
+
+.edit a {
+    color: white;
+    text-decoration: none;
+}
+
+.edit img {
+    width: 1.5rem;
 }
 
 .notificações{
