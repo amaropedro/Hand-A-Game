@@ -58,7 +58,10 @@ class Game(models.Model):
 
   genres = models.ManyToManyField('Genre')
   
-  def add_game(self, title, isPhysical, cover, rentalDuration, price, isAvailable, platform, genres, user):
+  def add_game(self, 
+    title, isPhysical, cover, rentalDuration, 
+    price, isAvailable, platform, genres, user
+  ):
     game = Game()
     game.title = title
     game.isRented = False
@@ -70,7 +73,26 @@ class Game(models.Model):
     game.platform = platform
     game.user = user
     game.save()
+
     game.genres.set(genres)
+
+  def edit_game(self,
+    title, isPhysical, cover, rentalDuration, 
+    price, isAvailable, platform, genres, user
+  ):
+    self.title = title
+    self.isRented = False
+    self.isPhysical = isPhysical
+    self.cover = cover
+    self.rentalDuration = rentalDuration
+    self.price = price
+    self.isAvailableToRent = isAvailable
+    self.platform = platform
+    self.user = user
+    self.save()
+    
+    self.genres.set(genres)
+
   
   def __str__(self):
     return f"{self.id}: {self.title}"

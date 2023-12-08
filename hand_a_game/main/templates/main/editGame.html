@@ -10,7 +10,7 @@
     <form 
         class="cadastro-form-container"
         method="post" 
-        action="{% url 'addGame' %}"
+        action="{% url 'editGame' game.id %}"
         enctype="multipart/form-data"
     >
         {% csrf_token %}

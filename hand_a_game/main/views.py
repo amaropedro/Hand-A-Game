@@ -101,7 +101,10 @@ def addGame_view(request):
             if form.is_valid():            
                 img = form.cleaned_data['img']
 
-                with open(os.path.join(settings.MEDIA_ROOT, 'images/games', img.name), 'wb') as destination:
+                with open(
+                    os.path.join(settings.MEDIA_ROOT, 'images/games', img.name),
+                    'wb'
+                ) as destination:
                     for chunk in img.chunks():
                         destination.write(chunk)
                 
@@ -134,6 +137,37 @@ def addGame_view(request):
     return redirect('login')
 
 def editGame_view(request, id):
+
+    if request.method == 'POST':
+        form = AddGameForm(request.POST, request.FILES)
+        print(form)
+
+        if form.is_valid():            
+            img = form.cleaned_data['img']
+
+            with open(
+                os.path.join(settings.MEDIA_ROOT, 'images/games', img.name),
+                'wb'
+            ) as destination:
+                for chunk in img.chunks():
+                    destination.write(chunk)
+            
+            platform = Platform.objects.filter(id=form.cleaned_data['platform'])[0]
+            
+            game = Game.objects.filter(id=id)[0]
+            game.edit_game(
+                title=form.cleaned_data['name'],
+                isPhysical=form.cleaned_data['isPhysical'],
+                cover=img,
+                rentalDuration=form.cleaned_data['rental'],
+                price=form.cleaned_data['price'],
+                isAvailable=form.cleaned_data['isAvailable'],
+                platform=platform,
+                genres=form.cleaned_data['genres'],
+                user=request.user
+            )
+
+            return redirect('myGames')
 
     game = Game.objects.filter(id=id)[0]
     print(game)
