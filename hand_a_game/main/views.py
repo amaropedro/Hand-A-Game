@@ -6,7 +6,7 @@ from django.http import Http404
 from django.urls import reverse
 
 from .models import Game, User, Platform, Genre
-from .forms import AddGameForm
+from .forms import AddGameForm, EditUserForm
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -221,4 +221,20 @@ def delete_view(request, id):
             return redirect('myGames')
 
         return redirect('myGames')
+    return redirect('login')
+
+def editUser_view(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            pass
+
+        form = EditUserForm(initial={
+            'name': request.user.username,
+            'email': request.user.email,
+            'city': request.user.city,
+            'phone': request.user.phone,
+        })
+        return render(request, 'main/editUser.html', {
+            'form': form
+        })
     return redirect('login')
