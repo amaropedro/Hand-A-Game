@@ -213,6 +213,7 @@ def editUser_view(request):
                     name = form.cleaned_data['name'],
                     city = form.cleaned_data['city'],
                     phone = form.cleaned_data['phone'],
+                    email = form.cleaned_data['email'],
                 )
 
         form = EditUserForm(initial={

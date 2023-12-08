@@ -40,11 +40,11 @@ class User(AbstractBaseUser, PermissionsMixin, models.Model):
   USERNAME_FIELD = 'email'
   REQUIRED_FIELDS = ['username']
 
-  def edit_user(self, name, city, phone):
+  def edit_user(self, name, city, phone, email):
     self.username = name
     self.city = city
     self.phone = phone
-    # self.email = 
+    self.email = email
     self.save()
 
   def __str__(self):
