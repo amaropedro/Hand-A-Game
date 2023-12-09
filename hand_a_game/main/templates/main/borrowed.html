@@ -8,26 +8,26 @@
 
 {% block content %}
 
-<div class="pesquisa">
+<div class="jogos">
 
-    <div class="results">
-
-        {% if games_list %}
+    {% if games_list %}
             {% for game in games_list %}
+
                 <div class="result-item"
                     style='
-                        background-image: url("{{game.cover.url}}");
+                        {% if game.cover %}
+                            background-image: url("{{game.cover.url}}");
+                        {% endif %}
                     '
                 >
                     <div class="platforma">
                         {{game.platform}}
                     </div>
 
-                    
                     <div class="overlay">
-                        <a href="{% url 'borrow' game.id %}">Pegar emprestado</a>
-
                         <div>
+                            Nome: {{game.title}}
+                            <br>
                             Dono: {{game.user.username}}
                         </div>
                         <div>
@@ -35,10 +35,9 @@
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        {% endif %}
 
-    </div>
+            {% endfor %}
+    {% endif %}
 </div>
 
 {% endblock %}

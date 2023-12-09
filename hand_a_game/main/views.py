@@ -79,6 +79,7 @@ def home_view(request):
         return render(request, 'main/home.html', {
             'games_list': games,
             'platforms': platforms,
+            'currentNumber': 3,
         })
     return redirect('login')
 
@@ -90,7 +91,8 @@ def myGames_view(request):
         userGames = Game.objects.filter(user=request.user)
         return render(request, 'main/myGames.html', {
             'games_list': userGames,
-            'erro': erro
+            'erro': erro,
+            'currentNumber': 1,
         })
     
     return redirect('login')
@@ -223,7 +225,8 @@ def editUser_view(request):
             'phone': request.user.phone,
         })
         return render(request, 'main/editUser.html', {
-            'form': form
+            'form': form,
+            'currentNumber': 0,
         })
     return redirect('login')
 
@@ -252,5 +255,6 @@ def borrowed_view(request):
         return render(request, 'main/borrowed.html', {
             'games_list': games_list,
             'erro': erro,
+            'currentNumber': 2,
         })
     return redirect('login')

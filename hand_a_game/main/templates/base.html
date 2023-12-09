@@ -23,6 +23,7 @@
                 <a 
                     class="sidebar-btn"
                     href="{% url 'editUser' %}"
+                    id="{% if currentNumber == 0 %}{{ 'current' }}{% endif %}"
                 >
                     <img class="icon" src="{% static 'main/images/user_w.png' %}">
                     <div class="text">Perfil</div>
@@ -30,6 +31,7 @@
                 <a 
                     class="sidebar-btn"
                     href="{% url 'myGames' %}"
+                    id="{% if currentNumber == 1 %}{{ 'current' }}{% endif %}"
                 >
                     <img class="icon" src="{% static 'main/images/jogos.png' %}">
                     <div class="text">Meus Jogos</div>
@@ -37,6 +39,7 @@
                 <a 
                     class="sidebar-btn"
                     href="{% url 'borrowed' %}"
+                    id="{% if currentNumber == 2 %}{{ 'current' }}{% endif %}"
                 >
                     <img class="icon" src="{% static 'main/images/emprestar.png' %}">
                     <div class="text">Emprestados</div>
@@ -44,13 +47,14 @@
                 <a 
                     class="sidebar-btn"
                     href="{% url 'home' %}"
-                    id="current"
+                    id="{% if currentNumber == 3 %}{{ 'current' }}{% endif %}"
                 >
-                    <img class="icon" src="{% static 'main/images/pesquisa_b.png' %}">
+                    <img class="icon" src="{% static 'main/images/pesquisa.png' %}">
                     <div class="text">Pesquisa</div>
                 </a>
                 <a 
                     class="sidebar-btn"
+                    id="{% if currentNumber == 4 %}{{ 'current' }}{% endif %}"
                 >
                     <img class="icon" src="{% static 'main/images/notificação.png' %}">
                     <div class="text">Notificações</div>
@@ -58,6 +62,7 @@
                 <a 
                     class="sidebar-btn"
                     href="{% url 'logout' %}"
+                    id="{% if currentNumber == 5 %}{{ 'current' }}{% endif %}"
                 >
                     <img class="icon" src="{% static 'main/images/sign-out.svg' %}">
                     <div class="text">Sair</div>
