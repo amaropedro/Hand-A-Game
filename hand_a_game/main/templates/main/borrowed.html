@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+  <style>
+  </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="pesquisa">
+
+    <div class="results">
+
+        {% if games_list %}
+            {% for game in games_list %}
+                <div class="result-item"
+                    style='
+                        background-image: url("{{game.cover.url}}");
+                    '
+                >
+                    <div class="platforma">
+                        {{game.platform}}
+                    </div>
+
+                    
+                    <div class="overlay">
+                        <a href="{% url 'borrow' game.id %}">Pegar emprestado</a>
+
+                        <div>
+                            Dono: {{game.user.username}}
+                        </div>
+                        <div>
+                            Tempo Maximo: {{game.rentalDuration}} dias
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

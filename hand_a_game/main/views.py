@@ -85,7 +85,7 @@ def home_view(request):
 def myGames_view(request):
     if request.user.is_authenticated:
 
-        erro = request.session.pop('error_in_delete', '')
+        erro = request.session.pop('error', '')
 
         userGames = Game.objects.filter(user=request.user)
         return render(request, 'main/myGames.html', {
@@ -180,7 +180,7 @@ def editGame_view(request, id):
                 return redirect('myGames')
 
         except Http404:
-            request.session['error_in_delete'] = 'O jogo não foi encontrado!'
+            request.session['error'] = 'O jogo não foi encontrado!'
             return redirect('myGames')
 
     return redirect('login')
@@ -197,7 +197,7 @@ def delete_view(request, id):
                 game.delete()
 
         except Http404:
-            request.session['error_in_delete'] = 'O jogo não foi encontrado!'
+            request.session['error'] = 'O jogo não foi encontrado!'
             return redirect('myGames')
 
         return redirect('myGames')
@@ -232,8 +232,25 @@ def searchGame_view(request):
 
 def borrow_view(request, id):
     if request.user.is_authenticated:
-        game = get_object_or_404(Game, id=id)
-        RentalManager.borrowGame(user=request.user, game=game)
+        try:
+            game = get_object_or_404(Game, id=id)
+            RentalManager.borrowGame(user=request.user, game=game)
 
-        return redirect('home')
+        except Http404:
+            request.session['error'] = 'O jogo não foi encontrado!'
+
+        return redirect('borrowed')
+    return redirect('login')
+
+def borrowed_view(request):
+    if request.user.is_authenticated:
+        erro = request.session.pop('error', '')
+
+        rentals = RentalManager.objects.filter(user=request.user)
+        games_list = [rental.game for rental in rentals]
+
+        return render(request, 'main/borrowed.html', {
+            'games_list': games_list,
+            'erro': erro,
+        })
     return redirect('login')
