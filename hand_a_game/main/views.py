@@ -288,3 +288,10 @@ def borrowed_view(request):
             'currentNumber': 2,
         })
     return redirect('login')
+
+def notifications_view(request):
+    if request.user.is_authenticated:
+        return render(request, 'main/notifications.html', {
+            'currentNumber': 4,
+        })
+    return redirect('login')

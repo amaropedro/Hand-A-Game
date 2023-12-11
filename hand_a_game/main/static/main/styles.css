@@ -675,3 +675,48 @@ input:focus{
 .acc:hover, .rec:hover{
     text-decoration: underline;
 }
+
+/*Notificação*/
+
+.notifications-container .notification {
+    width: 100%;
+    background-color: #00000044;
+
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+}
+
+.notifications-container .title {
+    font-size: 30px;
+    margin: 20px;
+}
+
+.notifications-container .description {
+    color: white;
+}
+
+.notifications-container .buttons-container {
+    display: flex;
+    gap: 10px;
+
+    padding: 10px;
+}
+
+.notifications-container .buttons-container a {
+    padding: 10px;
+    border-radius: 10px;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.notifications-container .buttons-container .accept {
+    background-color: green;
+}
+
+.notifications-container .buttons-container .refuse {
+    background-color: red;
+}
