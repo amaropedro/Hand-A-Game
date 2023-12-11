@@ -169,7 +169,8 @@ class RentalManager(models.Model):
   
   
 class Notification(models.Model):
-  content = models.CharField(max_length=4999)
+  title = models.CharField(max_length=50)
+  description = models.CharField(max_length=4999, default="")
   date = models.DateField()
 
   user = models.ForeignKey(User, on_delete=models.CASCADE)

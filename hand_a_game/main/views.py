@@ -1,9 +1,11 @@
+
+import datetime
 from django.shortcuts import render
 
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
-from .models import Game, User, Platform, Genre, RentalManager
+from .models import Game, User, Platform, Genre, RentalManager, Notification
 from .forms import AddGameForm, EditUserForm
 
 from django.shortcuts import render, redirect
@@ -267,7 +269,12 @@ def borrow_view(request, id):
     if request.user.is_authenticated:
         try:
             game = get_object_or_404(Game, id=id)
-            RentalManager.borrowGame(user=request.user, game=game)
+
+            notification = Notification()
+            notification.title = 'Empréstimo de jogo'
+            notification.description = f"O usuário @{game.user.username} gostaria de pegar emprestado o jogo {game.title} de você!"
+            notification.date = datetime.datetime.now()
+            notification.user = request.user
 
         except Http404:
             request.session['error'] = 'O jogo não foi encontrado!'
