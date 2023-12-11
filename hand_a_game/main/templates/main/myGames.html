@@ -26,16 +26,12 @@
                     </div>
 
                     <div class="overlay">
-                        <div class="edit">
+                        <a href="edit_game/{{ game.id }}" class="overlay-action">
                             <img src="{% static 'main/images/pencil-line.svg' %}">
-                            <a href="edit_game/{{ game.id }}">
-                                Editar
-                            </a>
-                        </div>
+                            Editar
+                        </a>
                         <div>
                             Nome: {{game.title}}
-                            <br>
-                            Dono: {{game.user.username}}
                         </div>
                         <div>
                             Tempo Maximo: {{game.rentalDuration}} dias

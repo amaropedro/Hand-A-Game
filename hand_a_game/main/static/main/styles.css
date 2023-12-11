@@ -527,26 +527,25 @@ input:focus{
     flex-direction: column;
 }
 
-.edit{
+.overlay-action{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    gap: 1rem;
+    gap: 0.5rem;
+    padding-left: 0.25rem;
     
+    color: white;
+    text-decoration: none;
+
     cursor: pointer;
 }
 
-.edit :hover {
+.overlay-action:hover {
     text-decoration: underline;
 }
 
-.edit a {
-    color: white;
-    text-decoration: none;
-}
-
-.edit img {
+.overlay-action img {
     width: 1.5rem;
 }
 
