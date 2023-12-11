@@ -73,14 +73,43 @@ def logout_view(request):
 
 def home_view(request):
     if request.user.is_authenticated:
+
+        platforms = Platform.objects.all() 
+
+        if request.method == 'POST':
+
+            search = request.POST.get('search', '')
+            select_day = request.POST.get('days')
+            select_platform = request.POST.get('platforms')
+            
+            print(search)
+            print(select_day)
+            print(select_platform)
+
+            games = Game.objects.exclude(user=request.user)
+            games = games.filter(title__icontains=search)
+
+            if(select_day != 'qualquer'):
+                games = games.filter(rentalDuration__lte=int(select_day))
+                    
+            if(select_platform != 'qualquer'):
+                platform = Platform.objects.filter(platformName=select_platform)[0]
+                games = games.filter(platform=platform)
+
+            return render(request, 'main/home.html', {
+                'games_list': games,
+                'platforms': platforms,
+                'currentNumber': 3,
+            })
+
         games = Game.objects.exclude(user=request.user)
-        platforms = Platform.objects.all()
 
         return render(request, 'main/home.html', {
             'games_list': games,
             'platforms': platforms,
             'currentNumber': 3,
         })
+    
     return redirect('login')
 
 def myGames_view(request):

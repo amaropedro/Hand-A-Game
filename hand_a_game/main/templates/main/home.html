@@ -10,55 +10,56 @@
 
 <div class="pesquisa">
     <div class="container-pesquisa">
-        <div class="container-barra-pesquisa">
-            <img 
-                class="icon-pesquisa" 
-                src="{% static 'main/images/pesquisa.png' %}"
-            >
-            <form 
-                class="barra-pesquisa"
-                method="post" 
-                action="{% url 'home' %}"
-            >
-                <input class="fill" id="pesquisa">
-                <input 
-                    class="destaque-btn"
-                    type="submit" 
-                    value="Pesquisar"
-                >
-            </form> 
-        </div>
 
-        <div class="filtros">
-            <div class="filtro-texto">
-                Plataforma
+        <form 
+            class="barra-pesquisa"
+            method="post" 
+            action="{% url 'home' %}"
+        >
+            <div class="container-barra-pesquisa">
+                <img 
+                    class="icon-pesquisa" 
+                    src="{% static 'main/images/pesquisa.png' %}"
+                >
+                
+                    {% csrf_token %}
+                    <input class="fill" id="pesquisa" name="search">
             </div>
-            <div class="dropdown">
-                Qualquer
-                <div class="dropbtn"></div>
-                <div class="dropdown-content">
+
+            <div class="filtros">
+
+                <label for="platforms" class="dropdown">Plataforma</label>
+                <select id="platforms" name="platforms">
+                    <option value="qualquer">Qualquer</option>
                     {% if platforms %}
                         {% for platform in platforms %}
-                            <a href="#">{{platform}}</a>
+                            <option value="{{platform}}">
+                                {{platform}}
+                            </option>
                         {% endfor %}
                     {% endif %}
-                </div>
+                
+                </select>
+
+                <label for="days" class="dropdown">Quantidade de dias</label>
+                <select id="days" name="days">
+                    <option value="qualquer">Qualquer</option>
+                    <option value="30">30 dias</option>
+                    <option value="60">60 dias</option>
+                    <option value="90">90 dias</option>
+                    <option value="120">120 dias</option>
+                    <option value="150">150 dias</option>
+                </select>
+
             </div>
-            <div class="filtro-texto">
-                Tempo Maximo
-            </div>
-            <div class="dropdown">
-                Qualquer
-                <div class="dropbtn"></div>
-                <div class="dropdown-content">
-                    <a href="#">30 dias</a>
-                    <a href="#">60 dias</a>
-                    <a href="#">90 dias</a>
-                    <a href="#">120 dias</a>
-                    <a href="#">150 dias</a>
-                </div>
-            </div>
-        </div>
+
+            <input 
+                class="destaque-btn"
+                type="submit" 
+                value="Pesquisar"
+            >
+
+        </form>
         
     </div>
 

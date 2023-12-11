@@ -18,3 +18,18 @@ class EditUserForm(forms.Form):
     email = forms.EmailField(label="Email")
     city = forms.CharField(label="Cidade", max_length=200)
     phone = forms.CharField(label="Telefone", max_length=200)
+
+class SearchForm(forms.Form):
+    OPÇÕES_SELECT = [
+        ('qualquer', 'qualquer'),
+        ('30', '30 dias'),
+        ('60', '60 dias'),
+        ('90', '90 dias'),
+        ('120', '120 dias'),
+        ('150', '150 dias'),
+    ]
+
+    days = forms.ChoiceField(
+        choices=OPÇÕES_SELECT, 
+        label='Quantidade de dias'
+    )
