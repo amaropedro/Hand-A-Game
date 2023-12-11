@@ -316,14 +316,14 @@ def notificationResponse_view(request, id, accept):
     if request.user.is_authenticated:
         notification = Notification.objects.filter(id=id)[0]
         if notification.isActive and request.user == notification.user_receiver:
-            notification.isActive = False
-
-            notification.save()
+            notification.set_isActive(False)
 
             if(accept == 1):
+                notification.set_title("Empréstimo - Aceito")
+                
                 RentalManager.borrowGame(notification.user_sender, notification.game)
                 response = Notification()
-                response.title = 'Resultado: Empréstimo de jogo'
+                response.title = 'Resultado: Empréstimo'
                 response.description = f"O usuário @{notification.user_receiver.username} aceitou emprestar o jogo {notification.game.title}!"
                 response.date = datetime.datetime.now()
                 response.user_receiver = notification.user_sender
@@ -331,13 +331,16 @@ def notificationResponse_view(request, id, accept):
                 
                 response.save()
             else:
+                notification.set_title("Empréstimo - Recusado")
+                
                 response = Notification()
-                response.title = 'Resultado: Empréstimo de jogo'
+                response.title = 'Resultado: Empréstimo'
                 response.description = f"O usuário @{notification.user_receiver.username} não aceitou emprestar o jogo {notification.game.title}!"
                 response.date = datetime.datetime.now()
                 response.user_receiver = notification.user_sender
                 response.type = NotificationTypes.info
 
                 response.save()
+        return redirect('notifications')
 
     return redirect('login')

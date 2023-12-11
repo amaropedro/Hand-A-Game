@@ -201,5 +201,13 @@ class Notification(models.Model):
   game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True, default=None)
   isActive = models.BooleanField(default=True)
 
+  def set_isActive(self, value:bool):
+    self.isActive = value
+    self.save()
+  
+  def set_title(self, value:str):
+    self.title = value
+    self.save()
+
   def __str__(self):
     return f"{self.title}"
