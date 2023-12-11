@@ -304,6 +304,7 @@ def notifications_view(request):
     if request.user.is_authenticated:
 
         notifications = Notification.objects.filter(user_receiver=request.user)
+        notifications = notifications.filter(isActive=True)
 
         return render(request, 'main/notifications.html', {
             'currentNumber': 4,
@@ -314,6 +315,9 @@ def notifications_view(request):
 def notificationResponse_view(request, id, accept):
     if request.user.is_authenticated:
         notification = Notification.objects.filter(id=id)[0]
+        notification.isActive = False
+
+        notification.save()
 
         print("AQUIIIII:", accept)
 
