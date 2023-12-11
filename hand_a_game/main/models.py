@@ -176,7 +176,6 @@ class RentalManager(models.Model):
 class NotificationTypes():
   info = "info"
   borrow = "borrow"
-  success = "success"
   
 class Notification(models.Model):
   title = models.CharField(max_length=50, default="")
