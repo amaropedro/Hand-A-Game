@@ -173,7 +173,7 @@ class Notification(models.Model):
   description = models.CharField(max_length=4999, default="")
   date = models.DateField()
 
-  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
   def __str__(self):
-    return f"{self.content}"
+    return f"{self.title}"
