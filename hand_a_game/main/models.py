@@ -154,6 +154,7 @@ class Genre(models.Model):
 
 class RentalManager(models.Model):
   initialDate = models.DateField()
+  finished = models.BooleanField(default=False)
 
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   game = models.ForeignKey(Game, on_delete=models.CASCADE)

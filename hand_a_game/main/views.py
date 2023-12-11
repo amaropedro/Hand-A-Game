@@ -125,7 +125,7 @@ def myGames_view(request):
         list = []
         
         for game in userGames:
-            rental = RentalManager.objects.filter(game=game)
+            rental = RentalManager.objects.filter(game=game, finished=False)
             if rental:
                 list.append((game, rental[0]))
             else:
