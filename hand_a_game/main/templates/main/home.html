@@ -72,7 +72,8 @@
                             background-image: url("{{game.cover.url}}");
                         '
                     >
-                        <div class="platforma">
+                        <div class="platforma" style="background: {{game.platform.color}}; color: {{game.platform.textColor}}">
+                            <img src="{{game.platform.logo.url}}">
                             {{game.platform}}
                         </div>
     
@@ -84,7 +85,7 @@
                             </a>
 
                             <div>
-                                Dono: {{game.user.username}}
+                                Nome: {{game.title}}
                             </div>
                             <div>
                                 Tempo Maximo: {{game.rentalDuration}} dias

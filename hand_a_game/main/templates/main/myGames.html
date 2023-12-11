@@ -21,7 +21,8 @@
                         {% endif %}
                     '
                 >
-                    <div class="platforma">
+                    <div class="platforma" style="background: {{game.platform.color}}; color: {{game.platform.textColor}}">
+                        <img src="{{game.platform.logo.url}}">
                         {{game.platform}}
                     </div>
 

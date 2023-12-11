@@ -52,6 +52,8 @@ class User(AbstractBaseUser, PermissionsMixin, models.Model):
 class Platform(models.Model):
   platformName = models.CharField(max_length=200)
   logo = models.ImageField(upload_to='images/platforms/')
+  color = models.CharField(max_length=200)
+  textColor = models.CharField(max_length=200)
   
   def __str__(self):
     return self.platformName

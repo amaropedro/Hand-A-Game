@@ -549,9 +549,18 @@ input:focus{
 }
 
 .platforma{
-    background-color: #329BE7;
+    background-color: black;
+    color: white;
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+}
+
+.platforma img{
+    height: 15px;
+    width: auto;
 }
 
 .overlay{
@@ -560,6 +569,7 @@ input:focus{
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
+    font-size: 0.9rem;
 }
 
 .overlay-action{
