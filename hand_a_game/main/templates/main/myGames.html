@@ -12,7 +12,7 @@
     </a>
 
     {% if games_list %}
-            {% for game in games_list %}
+            {% for game, rental in games_list %}
 
                 <div class="result-item"
                     style='
@@ -27,8 +27,8 @@
                     </div>
 
                     {% if game.isRented %}
-                        <div class="overlay" style="text-align: center; font-weight: 800; font-size: 2rem">
-                            Emprestado
+                        <div class="overlay" style="text-align: center; font-weight: 800; font-size: 1rem">
+                            Emprestado à {{rental.user.username}} em {{rental.initialDate}}
                         </div>
                     {% endif %}
 

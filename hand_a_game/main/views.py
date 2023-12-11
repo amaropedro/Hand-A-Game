@@ -121,8 +121,19 @@ def myGames_view(request):
         erro = request.session.pop('error', '')
 
         userGames = Game.objects.filter(user=request.user)
+        
+        list = []
+        
+        for game in userGames:
+            rental = RentalManager.objects.filter(game=game)
+            if rental:
+                list.append((game, rental[0]))
+            else:
+                list.append((game, None))
+        
+        print(list)
         return render(request, 'main/myGames.html', {
-            'games_list': userGames,
+            'games_list': list,
             'erro': erro,
             'currentNumber': 1,
         })
