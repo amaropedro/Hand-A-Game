@@ -10,6 +10,13 @@
 
 <div class="jogos">
 
+    <a
+        class="new-game-btn" 
+        style=' background-image: url({% static 'main/images/plus.svg' %})'
+        href="{% url 'home' %}"
+    >
+    </a>
+
     {% if games_list %}
             {% for game in games_list %}
 
