@@ -20,6 +20,10 @@
                 <div class="profile-pic">
                     <img id="logo" src="{% static 'main/images/ProfilePic.png' %}">
                 </div>
+                <div class="username">
+                    {{request.user.username}}
+                </div>
+                <div class="form-division-line"></div>
                 <a 
                     class="sidebar-btn"
                     href="{% url 'editUser' %}"

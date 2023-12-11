@@ -245,6 +245,11 @@ input:focus{
     color: white;
     background-repeat: no-repeat;
     background-position: bottom;
+    overflow-y: scroll;
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
 }
 
 .sidebar a {
@@ -257,6 +262,36 @@ input:focus{
     justify-content: center;
     margin-top: 10%;
     margin-bottom: 5%;
+}
+
+@media (max-width: 800px) {
+    .profile-pic img{
+      height: 50px !important;
+    }
+
+    .sidebar-btn img{
+        width: 10px !important;
+    }
+
+    .sidebar-btn div{
+        font-size: 0.75rem;
+    }
+}
+
+.username{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    font-size: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+    overflow-x: scroll;
+}
+
+.username::-webkit-scrollbar {
+    display: none;
 }
 
 .sidebar-btn{
