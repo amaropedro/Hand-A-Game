@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
-from .models import Game, User, Platform, Genre, RentalManager, Notification
+from .models import Game, User, Platform, Genre, RentalManager, Notification, NotificationTypes
 from .forms import AddGameForm, EditUserForm
 
 from django.shortcuts import render, redirect
@@ -277,6 +277,7 @@ def borrow_view(request, id):
             notification.user_receiver = game.user
             notification.user_sender = request.user
             notification.game = game
+            notification.type = NotificationTypes.borrow
 
             notification.save()
 
@@ -304,7 +305,6 @@ def notifications_view(request):
     if request.user.is_authenticated:
 
         notifications = Notification.objects.filter(user_receiver=request.user)
-        notifications = notifications.filter(isActive=True)
 
         return render(request, 'main/notifications.html', {
             'currentNumber': 4,
@@ -315,21 +315,29 @@ def notifications_view(request):
 def notificationResponse_view(request, id, accept):
     if request.user.is_authenticated:
         notification = Notification.objects.filter(id=id)[0]
-        notification.isActive = False
+        if notification.isActive and request.user == notification.user_receiver:
+            notification.isActive = False
 
-        notification.save()
+            notification.save()
 
-        print("AQUIIIII:", accept)
+            if(accept == 1):
+                RentalManager.borrowGame(notification.user_sender, notification.game)
+                response = Notification()
+                response.title = 'Resultado: Empréstimo de jogo'
+                response.description = f"O usuário @{notification.user_receiver.username} aceitou emprestar o jogo {notification.game.title}!"
+                response.date = datetime.datetime.now()
+                response.user_receiver = notification.user_sender
+                response.type = NotificationTypes.info
+                
+                response.save()
+            else:
+                response = Notification()
+                response.title = 'Resultado: Empréstimo de jogo'
+                response.description = f"O usuário @{notification.user_receiver.username} não aceitou emprestar o jogo {notification.game.title}!"
+                response.date = datetime.datetime.now()
+                response.user_receiver = notification.user_sender
+                response.type = NotificationTypes.info
 
-        if(accept == 1):
-            RentalManager.borrowGame(notification.user_sender, notification.game)
-        else:
-            response = Notification()
-            response.title = 'Resultado: Empréstimo de jogo'
-            response.description = f"O usuário @{notification.user_receiver.username} não aceitou emprestar o jogo {notification.game.title}!"
-            response.date = datetime.datetime.now()
-            response.user_receiver = notification.user_sender
-
-            response.save()
+                response.save()
 
     return redirect('login')

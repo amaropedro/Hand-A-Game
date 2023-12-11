@@ -12,26 +12,36 @@
     <div class="notifications-container">
 
         {% for notification in notifications %}
-
+        
             <div class="notification">
+                {% if not notification.isActive %}
+                    <div class="notification-overlay"></div>
+                {% endif %}
+
                 <h3 class="title">{{notification.title}}</h3>
                 <p class="description">
                     {{notification.description}}
                 </p>
-                <div class="buttons-container">
-                    <a 
-                        href="{% url 'borrowResponse' notification.id 1 %}" 
-                        class="accept"
-                    >
-                        Aceitar
-                    </a>
-                    <a 
-                        href="{% url 'borrowResponse' notification.id 0 %}" 
-                        class="refuse"
-                    >
-                        Recusar
-                    </a>
-                </div>
+                {% if notification.type == 'borrow' and notification.isActive == True %}
+                    <div class="buttons-container">
+                        <a 
+                            href="{% url 'borrowResponse' notification.id 1 %}" 
+                            class="accept"
+                        >
+                            Aceitar
+                        </a>
+                        <a 
+                            href="{% url 'borrowResponse' notification.id 0 %}" 
+                            class="refuse"
+                        >
+                            Recusar
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="notification-date">
+                        {{notification.date}}
+                    </div>
+                {% endif %}   
             </div>
 
         {% endfor %}

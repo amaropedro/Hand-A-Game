@@ -172,11 +172,17 @@ class RentalManager(models.Model):
   def __str__(self):
     return f"Jogo {self.game} alugado por {self.user} em {self.initialDate}"
   
+
+class NotificationTypes():
+  info = "info"
+  borrow = "borrow"
+  success = "success"
   
 class Notification(models.Model):
   title = models.CharField(max_length=50, default="")
   description = models.CharField(max_length=4999, default="")
   date = models.DateField()
+  type = models.CharField(max_length=10, default="")
 
   user_receiver = models.ForeignKey(
     User,
