@@ -269,18 +269,26 @@ def borrow_view(request, id):
     if request.user.is_authenticated:
         try:
             game = get_object_or_404(Game, id=id)
+        
+            if game.isAvailableToRent and not game.isRented:
+                check = Notification.objects.filter(user_sender = request.user, game = game, isActive = True)
+                if not check:
 
-            notification = Notification()
-            notification.title = 'Empréstimo de jogo'
-            notification.description = f"O usuário @{request.user.username} gostaria de pegar emprestado o jogo {game.title} de você!"
-            notification.date = datetime.datetime.now()
-            notification.user_receiver = game.user
-            notification.user_sender = request.user
-            notification.game = game
-            notification.type = NotificationTypes.borrow
+                    notification = Notification()
+                    notification.title = 'Empréstimo de jogo'
+                    notification.description = f"O usuário @{request.user.username} gostaria de pegar emprestado o jogo {game.title} de você!"
+                    notification.date = datetime.datetime.now()
+                    notification.user_receiver = game.user
+                    notification.user_sender = request.user
+                    notification.game = game
+                    notification.type = NotificationTypes.borrow
 
-            notification.save()
-
+                    notification.save()
+                    request.session['error'] = 'Emprestimo Solicitado!'
+                else:
+                    request.session['error'] = 'Emprestimo já solicitado!'
+            else:
+                request.session['error'] = 'Jogo indisponivel!'
         except Http404:
             request.session['error'] = 'O jogo não foi encontrado!'
 
