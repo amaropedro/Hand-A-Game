@@ -10,16 +10,31 @@
 
 <div class="jogos">
     <div class="notifications-container">
-        <div class="notification">
-            <h3 class="title">Titlzdfdsfe</h3>
-            <p class="description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, molestias officiis error quos ducimus illo quisquam, laborum, repellendus ratione delectus debitis inventore quo similique nihil a iure id! Repellendus, laboriosam.
-            </p>
-            <div class="buttons-container">
-                <a class="accept">Aceitar</a>
-                <a class="refuse">Recusar</a>
+
+        {% for notification in notifications %}
+
+            <div class="notification">
+                <h3 class="title">{{notification.title}}</h3>
+                <p class="description">
+                    {{notification.description}}
+                </p>
+                <div class="buttons-container">
+                    <a 
+                        href="{% url 'borrowResponse' notification.id 1 %}" 
+                        class="accept"
+                    >
+                        Aceitar
+                    </a>
+                    <a 
+                        href="{% url 'borrowResponse' notification.id 0 %}" 
+                        class="refuse"
+                    >
+                        Recusar
+                    </a>
+                </div>
             </div>
-        </div>
+
+        {% endfor %}
     </div>
 </div>
 

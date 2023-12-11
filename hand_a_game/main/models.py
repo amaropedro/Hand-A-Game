@@ -108,6 +108,10 @@ class Game(models.Model):
   def set_rented(self, value:bool):
     self.isRented = value
     self.save()
+
+  def set_isAvailableToRent(self, value:bool):
+    self.isAvailableToRent = value
+    self.save()
   
   def __str__(self):
     return f"{self.id}: {self.title}"
@@ -162,6 +166,7 @@ class RentalManager(models.Model):
     rental.save()
 
     game.set_rented(True)
+    game.set_isAvailableToRent(False)
 
 
   def __str__(self):
@@ -169,11 +174,25 @@ class RentalManager(models.Model):
   
   
 class Notification(models.Model):
-  title = models.CharField(max_length=50)
+  title = models.CharField(max_length=50, default="")
   description = models.CharField(max_length=4999, default="")
   date = models.DateField()
 
-  user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+  user_receiver = models.ForeignKey(
+    User,
+    on_delete=models.CASCADE, 
+    related_name='user_receiver',
+    default=None,
+  )
+  user_sender = models.ForeignKey(
+    User,
+    on_delete=models.CASCADE,
+    null=True, 
+    related_name='user_sender',
+    default=None,
+  )
+
+  game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True, default=None)
 
   def __str__(self):
     return f"{self.title}"

@@ -14,5 +14,9 @@ urlpatterns = [
   path('editUser', views.editUser_view, name="editUser"),
   path('borrow/<int:id>', views.borrow_view, name="borrow"),
   path('borrowed', views.borrowed_view, name='borrowed'),
-  path('notifications', views.notifications_view, name='notifications')
+  path('notifications', views.notifications_view, name='notifications'),
+  path(
+    'notifications/<int:id>/<int:accept>', 
+    views.notificationResponse_view, name='borrowResponse'
+  ),
 ]

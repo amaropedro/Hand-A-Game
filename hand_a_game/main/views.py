@@ -272,9 +272,13 @@ def borrow_view(request, id):
 
             notification = Notification()
             notification.title = 'Empréstimo de jogo'
-            notification.description = f"O usuário @{game.user.username} gostaria de pegar emprestado o jogo {game.title} de você!"
+            notification.description = f"O usuário @{request.user.username} gostaria de pegar emprestado o jogo {game.title} de você!"
             notification.date = datetime.datetime.now()
-            notification.user = request.user
+            notification.user_receiver = game.user
+            notification.user_sender = request.user
+            notification.game = game
+
+            notification.save()
 
         except Http404:
             request.session['error'] = 'O jogo não foi encontrado!'
@@ -298,7 +302,30 @@ def borrowed_view(request):
 
 def notifications_view(request):
     if request.user.is_authenticated:
+
+        notifications = Notification.objects.filter(user_receiver=request.user)
+
         return render(request, 'main/notifications.html', {
             'currentNumber': 4,
+            'notifications': notifications
         })
+    return redirect('login')
+
+def notificationResponse_view(request, id, accept):
+    if request.user.is_authenticated:
+        notification = Notification.objects.filter(id=id)[0]
+
+        print("AQUIIIII:", accept)
+
+        if(accept == 1):
+            RentalManager.borrowGame(notification.user_sender, notification.game)
+        else:
+            response = Notification()
+            response.title = 'Resultado: Empréstimo de jogo'
+            response.description = f"O usuário @{notification.user_receiver.username} não aceitou emprestar o jogo {notification.game.title}!"
+            response.date = datetime.datetime.now()
+            response.user_receiver = notification.user_sender
+
+            response.save()
+
     return redirect('login')
