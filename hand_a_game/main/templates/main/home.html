@@ -16,49 +16,50 @@
             method="post" 
             action="{% url 'home' %}"
         >
+            {% csrf_token %}
+
             <div class="container-barra-pesquisa">
                 <img 
                     class="icon-pesquisa" 
                     src="{% static 'main/images/pesquisa.png' %}"
                 >
-                
-                    {% csrf_token %}
-                    <input class="fill" id="pesquisa" name="search">
+                <input class="fill" id="pesquisa" name="search">
+                <input 
+                    class="destaque-btn"
+                    type="submit" 
+                    value="Pesquisar"
+                >
             </div>
 
             <div class="filtros">
-
-                <label for="platforms" class="dropdown">Plataforma</label>
-                <select id="platforms" name="platforms">
-                    <option value="qualquer">Qualquer</option>
-                    {% if platforms %}
-                        {% for platform in platforms %}
-                            <option value="{{platform}}">
-                                {{platform}}
-                            </option>
-                        {% endfor %}
-                    {% endif %}
                 
-                </select>
+                <div>
+                    <label for="platforms" class="dropdown">Plataforma</label>
+                    <select id="platforms" name="platforms">
+                        <option value="qualquer">Qualquer</option>
+                        {% if platforms %}
+                            {% for platform in platforms %}
+                                <option value="{{platform}}">
+                                    {{platform}}
+                                </option>
+                            {% endfor %}
+                        {% endif %}
+                    
+                    </select>
 
-                <label for="days" class="dropdown">Quantidade de dias</label>
-                <select id="days" name="days">
-                    <option value="qualquer">Qualquer</option>
-                    <option value="30">30 dias</option>
-                    <option value="60">60 dias</option>
-                    <option value="90">90 dias</option>
-                    <option value="120">120 dias</option>
-                    <option value="150">150 dias</option>
-                </select>
+                    <label for="days" class="dropdown">Dias</label>
+                    <select id="days" name="days">
+                        <option value="qualquer">Qualquer</option>
+                        <option value="30">30 dias</option>
+                        <option value="60">60 dias</option>
+                        <option value="90">90 dias</option>
+                        <option value="120">120 dias</option>
+                        <option value="150">150 dias</option>
+                    </select>
+                </div>
 
             </div>
-
-            <input 
-                class="destaque-btn"
-                type="submit" 
-                value="Pesquisar"
-            >
-
+            
         </form>
         
     </div>

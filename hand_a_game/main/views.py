@@ -87,6 +87,7 @@ def home_view(request):
             print(select_platform)
 
             games = Game.objects.exclude(user=request.user)
+            games = games.filter(isAvailableToRent=True)
             games = games.filter(title__icontains=search)
 
             if(select_day != 'qualquer'):
