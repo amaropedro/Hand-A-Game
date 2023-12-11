@@ -29,12 +29,10 @@
             </div>
         {% endfor %}
 
-        <div class="delete-game">
+        <a href="{% url 'delete' game.id %}" class="delete-game">
             <img src="{% static 'main/images/trash.svg' %}">
-            <a href="{% url 'delete' game.id %}">
-                Excluir jogo
-            </a>
-        </div>
+            Excluir jogo
+        </a>
 
         <div style="width: 100%; display: flex; justify-content: center">
             <div class="cadastro-btn">

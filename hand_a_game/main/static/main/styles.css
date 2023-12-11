@@ -404,14 +404,11 @@ input:focus{
     justify-content: center;
     align-items: center;
     gap: 0.25rem;
-}
-
-.delete-game a {
     color: white;
     text-decoration: none;
 }
 
-.delete-game a:hover {
+.delete-game:hover {
     text-decoration: underline;
 }
 
@@ -727,7 +724,7 @@ input:focus{
 }
 
 .notifications-container .buttons-container a:hover {
-    text-decoration: underline;
+    text-decoration: underlinea;
 }
 
 .notifications-container .buttons-container .accept {
