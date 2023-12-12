@@ -22,6 +22,13 @@
                 <p class="description">
                     {{notification.description}}
                 </p>
+
+                {% if notification.type == 'info' %}
+                    <div class="notification-date">
+                        {{notification.date}}
+                    </div>
+                {% endif %}
+
                 {% if notification.isActive == True %}
                     {% if notification.type == 'borrow' %}
                         <div class="buttons-container">
@@ -54,13 +61,13 @@
                                     Não
                                 </a>
                             </div>
-                        {% else %}
-                            <div class="notification-date">
-                                {{notification.date}}
-                            </div>
                         {% endif %}
-                    {% endif %}
-                {% endif %}   
+                    {% endif %}   
+                {% else %}
+                    <div class="notification-date">
+                        {{notification.date}}
+                    </div>
+                {% endif %}
             </div>
 
         {% endfor %}
