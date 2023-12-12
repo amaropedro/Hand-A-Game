@@ -18,7 +18,7 @@ urlpatterns = [
   path('borrow/<int:id>', views.borrow_view, name="borrow"),
   path(
     'notifications/<int:id>/<int:accept>', 
-    views.notificationResponse_view, name='borrowResponse'
+    views.borrowResponse_view, name='borrowResponse'
   ),
 
   path('give_back/<int:id>', views.giveBack_view, name='giveBack'),

@@ -217,5 +217,40 @@ class Notification(models.Model):
     self.title = value
     self.save()
 
+  def newNotification(
+      self, 
+      title, 
+      description, 
+      receiver, 
+      type :NotificationTypes,
+      sender=None, 
+      game=None 
+    ):
+    self.title = title
+    self.description = description
+    self.date = datetime.datetime.now()
+    self.user_receiver = receiver
+    
+    if sender:
+      self.user_sender = sender
+      
+    if game:
+      self.game = game
+    
+    self.type = type
+    self.save()
+
   def __str__(self):
     return f"{self.title}"
+  
+class PaymentManager(models.Model):
+  date = models.DateField()
+  isPayed = models.BooleanField(default=False)
+  
+  def handle_payment(self, user, game):
+    self.isPayed = True
+    self.date = datetime.datetime.now()
+    self.save()
+    
+    RentalManager.borrowGame(user, game)
+      

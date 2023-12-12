@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
-from .models import Game, User, Platform, Genre, RentalManager, Notification, NotificationTypes
+from .models import Game, User, Platform, Genre, RentalManager, Notification, NotificationTypes, PaymentManager
 from .forms import AddGameForm, EditUserForm
 
 from django.shortcuts import render, redirect
@@ -321,15 +321,15 @@ def borrow_view(request, id):
                 if not check:
 
                     notification = Notification()
-                    notification.title = 'Empréstimo de jogo'
-                    notification.description = f"O usuário @{request.user.username} gostaria de pegar emprestado o jogo {game.title} de você!"
-                    notification.date = datetime.datetime.now()
-                    notification.user_receiver = game.user
-                    notification.user_sender = request.user
-                    notification.game = game
-                    notification.type = NotificationTypes.borrow
+                    notification.newNotification(
+                        title='Empréstimo de jogo',
+                        description=f"O usuário @{request.user.username} gostaria de pegar emprestado o jogo {game.title} de você!",
+                        receiver=game.user,
+                        sender=request.user,
+                        game=game,
+                        type=NotificationTypes.borrow
+                    )
 
-                    notification.save()
                     request.session['error'] = 'Emprestimo Solicitado!'
                 else:
                     request.session['error'] = 'Emprestimo já solicitado!'
@@ -341,7 +341,7 @@ def borrow_view(request, id):
         return redirect('borrowed')
     return redirect('login')
 
-def notificationResponse_view(request, id, accept):
+def borrowResponse_view(request, id, accept):
     # id = notification.id
 
     if request.user.is_authenticated:
@@ -355,22 +355,22 @@ def notificationResponse_view(request, id, accept):
                 RentalManager.borrowGame(notification.user_sender, notification.game)
 
                 response = Notification()
-                response.title = 'Resultado: Empréstimo'
-                response.description = f"O usuário @{notification.user_receiver.username} aceitou emprestar o jogo {notification.game.title}!"
-                response.date = datetime.datetime.now()
-                response.user_receiver = notification.user_sender
-                response.type = NotificationTypes.info
-                response.save()
+                response.newNotification(
+                    title='Resultado: Empréstimo',
+                    description=f"O usuário @{notification.user_receiver.username} aceitou emprestar o jogo {notification.game.title}!",
+                    receiver=notification.user_sender,
+                    type=NotificationTypes.info
+                )
             else:
                 notification.set_title("Empréstimo - Recusado")
                 
                 response = Notification()
-                response.title = 'Resultado: Empréstimo'
-                response.description = f"O usuário @{notification.user_receiver.username} não aceitou emprestar o jogo {notification.game.title}!"
-                response.date = datetime.datetime.now()
-                response.user_receiver = notification.user_sender
-                response.type = NotificationTypes.info
-                response.save()
+                response.newNotification(
+                    title='Resultado: Empréstimo',
+                    description=f"O usuário @{notification.user_receiver.username} não aceitou emprestar o jogo {notification.game.title}!",
+                    receiver=notification.user_sender,
+                    type=NotificationTypes.info
+                )
         return redirect('notifications')
 
     return redirect('login')
@@ -397,15 +397,15 @@ def giveBack_view(request, id):
                 )
                 if not check:
                     notification = Notification()
-                    notification.title = 'Devolução de jogo'
-                    notification.description = f"O usuário @{request.user.username} devolveu o jogo {game.title} para você?"
-                    notification.date = datetime.datetime.now()
-                    notification.user_receiver = game.user
-                    notification.user_sender = request.user
-                    notification.game = game
-                    notification.type = NotificationTypes.giveBack
+                    notification.newNotification(
+                        title='Devolução de jogo',
+                        description="O usuário @{request.user.username} devolveu o jogo {game.title} para você?",
+                        receiver=game.user,
+                        sender=request.user,
+                        game=game,
+                        type=NotificationTypes.giveBack
+                    )
 
-                    notification.save()
                     request.session['error'] = 'Devolução Solicitada!'
                 else:
                     request.session['error'] = 'Devolução já solicitada!'
@@ -439,22 +439,28 @@ def giveBackResponse_view(request, id, accept):
                 rentalManagerGame.giveBackGame()
 
                 response = Notification()
-                response.title = 'Resultado: Devolução'
-                response.description = f"O usuário @{notification.user_receiver.username} aceitou a devolução do jogo {notification.game.title}!"
-                response.date = datetime.datetime.now()
-                response.user_receiver = notification.user_sender
-                response.type = NotificationTypes.info
-                response.save()
+                response.newNotification(
+                    title='Resultado: Devolução',
+                    description=f"O usuário @{notification.user_receiver.username} aceitou a devolução do jogo {notification.game.title}!",
+                    receiver=notification.user_sender,
+                    type=NotificationTypes.info
+                )
             else:
                 notification.set_title("Devolução - Recusada")
 
                 response = Notification()
-                response.title = 'Resultado: Devolução'
-                response.description = f"O usuário @{notification.user_receiver.username} não aceitou a devolução do jogo {notification.game.title}!"
-                response.date = datetime.datetime.now()
-                response.user_receiver = notification.user_sender
-                response.type = NotificationTypes.info
-                response.save()
+                response.newNotification(
+                    title='Resultado: Devolução',
+                    description=f"O usuário @{notification.user_receiver.username} não aceitou a devolução do jogo {notification.game.title}!",
+                    receiver=notification.user_sender,
+                    type=NotificationTypes.info
+                )
         return redirect('notifications')
 
     return redirect('login')
+
+def payment_view(request, notification_id):
+    notification = Notification.objects.filter(id=notification_id)[0]
+    new_payment = PaymentManager()
+    new_payment.handle_payment(notification.user_sender, notification.game)
+    
