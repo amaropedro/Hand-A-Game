@@ -184,6 +184,7 @@ class RentalManager(models.Model):
 class NotificationTypes():
   info = "info"
   borrow = "borrow"
+  giveBack = "giveBack"
   
 class Notification(models.Model):
   title = models.CharField(max_length=50, default="")

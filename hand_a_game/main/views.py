@@ -273,16 +273,51 @@ def editUser_view(request):
         })
     return redirect('login')
 
-def searchGame_view(request):
-    pass
+def borrowed_view(request):
+    if request.user.is_authenticated:
+        erro = request.session.pop('error', '')
+
+        rentals = RentalManager.objects.filter(user=request.user)
+        rentals = rentals.filter(finished=False)
+
+        games_list = [rental.game for rental in rentals]
+
+        return render(request, 'main/borrowed.html', {
+            'games_list': games_list,
+            'erro': erro,
+            'currentNumber': 2,
+        })
+    return redirect('login')
+
+def notifications_view(request):
+    if request.user.is_authenticated:
+
+        notifications = Notification.objects.filter(user_receiver=request.user)
+
+        return render(request, 'main/notifications.html', {
+            'currentNumber': 4,
+            'notifications': notifications
+        })
+    return redirect('login')
+
+
+
+
+
 
 def borrow_view(request, id):
+    # id = game.id
+
     if request.user.is_authenticated:
         try:
             game = get_object_or_404(Game, id=id)
         
             if game.isAvailableToRent and not game.isRented:
-                check = Notification.objects.filter(user_sender = request.user, game = game, isActive = True)
+                check = Notification.objects.filter(
+                    user_sender = request.user, 
+                    game = game, 
+                    isActive = True
+                )
                 if not check:
 
                     notification = Notification()
@@ -306,34 +341,9 @@ def borrow_view(request, id):
         return redirect('borrowed')
     return redirect('login')
 
-def borrowed_view(request):
-    if request.user.is_authenticated:
-        erro = request.session.pop('error', '')
-
-        rentals = RentalManager.objects.filter(user=request.user)
-        rentals = rentals.filter(finished=False)
-        
-        games_list = [rental.game for rental in rentals]
-
-        return render(request, 'main/borrowed.html', {
-            'games_list': games_list,
-            'erro': erro,
-            'currentNumber': 2,
-        })
-    return redirect('login')
-
-def notifications_view(request):
-    if request.user.is_authenticated:
-
-        notifications = Notification.objects.filter(user_receiver=request.user)
-
-        return render(request, 'main/notifications.html', {
-            'currentNumber': 4,
-            'notifications': notifications
-        })
-    return redirect('login')
-
 def notificationResponse_view(request, id, accept):
+    # id = notification.id
+
     if request.user.is_authenticated:
         notification = Notification.objects.filter(id=id)[0]
         if notification.isActive and request.user == notification.user_receiver:
@@ -343,13 +353,13 @@ def notificationResponse_view(request, id, accept):
                 notification.set_title("Empréstimo - Aceito")
                 
                 RentalManager.borrowGame(notification.user_sender, notification.game)
+
                 response = Notification()
                 response.title = 'Resultado: Empréstimo'
                 response.description = f"O usuário @{notification.user_receiver.username} aceitou emprestar o jogo {notification.game.title}!"
                 response.date = datetime.datetime.now()
                 response.user_receiver = notification.user_sender
                 response.type = NotificationTypes.info
-                
                 response.save()
             else:
                 notification.set_title("Empréstimo - Recusado")
@@ -360,21 +370,91 @@ def notificationResponse_view(request, id, accept):
                 response.date = datetime.datetime.now()
                 response.user_receiver = notification.user_sender
                 response.type = NotificationTypes.info
-
                 response.save()
         return redirect('notifications')
 
     return redirect('login')
 
+
+
+
+
+
 def giveBack_view(request, id):
+    # id = game.id
+
     if request.user.is_authenticated:
+        try:
+            game = get_object_or_404(Game, id=id)
+        
+            if game.isAvailableToRent == False and game.isRented:
 
-        # Devolve o jogo
-        game = Game.objects.filter(id=id)[0]
-        rentalManagerGame = RentalManager.objects.filter(game=game)[0]
-        rentalManagerGame.giveBackGame()
+                # Checar se já foi enviado uma notificação
+                check = Notification.objects.filter(
+                    user_sender = request.user, 
+                    game = game, 
+                    isActive = True
+                )
+                if not check:
+                    notification = Notification()
+                    notification.title = 'Devolução de jogo'
+                    notification.description = f"O usuário @{request.user.username} devolveu o jogo {game.title} para você?"
+                    notification.date = datetime.datetime.now()
+                    notification.user_receiver = game.user
+                    notification.user_sender = request.user
+                    notification.game = game
+                    notification.type = NotificationTypes.giveBack
 
+                    notification.save()
+                    request.session['error'] = 'Devolução Solicitada!'
+                else:
+                    request.session['error'] = 'Devolução já solicitada!'
+        except Http404:
+            request.session['error'] = 'O jogo não foi encontrado!'
+
+        
         # Retorna os jogos que o usuário emprestou
         return redirect('borrowed')
+
+    return redirect('login')
+
+def giveBackResponse_view(request, id, accept):
+    # id = notification.id
+
+    if request.user.is_authenticated:
+
+        notification = Notification.objects.filter(id=id)[0]
+        if notification.isActive and request.user == notification.user_receiver:
+            notification.set_isActive(False)
+
+            if(accept == 1):
+                notification.set_title("Devolução - Aceita")
+                
+                # Devolve o jogo
+                game = notification.game
+                rentalManagerGame = RentalManager.objects.filter(
+                    game=game,
+                    finished=False
+                )[0]
+                rentalManagerGame.giveBackGame()
+
+                response = Notification()
+                response.title = 'Resultado: Devolução'
+                response.description = f"O usuário @{notification.user_receiver.username} aceitou a devolução do jogo {notification.game.title}!"
+                response.date = datetime.datetime.now()
+                response.user_receiver = notification.user_sender
+                response.type = NotificationTypes.info
+                response.save()
+            else:
+                notification.set_title("Devolução - Recusada")
+
+                response = Notification()
+                response.title = 'Resultado: Devolução'
+                response.description = f"O usuário @{notification.user_receiver.username} não aceitou a devolução do jogo {notification.game.title}!"
+                response.date = datetime.datetime.now()
+                response.user_receiver = notification.user_sender
+                response.type = NotificationTypes.info
+                response.save()
+        return redirect('notifications')
 
     return redirect('login')

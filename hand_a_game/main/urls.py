@@ -12,12 +12,18 @@ urlpatterns = [
   path('edit_game/<int:id>', views.editGame_view, name="editGame"),
   path('delete/<int:id>', views.delete_view, name="delete"),
   path('editUser', views.editUser_view, name="editUser"),
-  path('borrow/<int:id>', views.borrow_view, name="borrow"),
   path('borrowed', views.borrowed_view, name='borrowed'),
   path('notifications', views.notifications_view, name='notifications'),
+
+  path('borrow/<int:id>', views.borrow_view, name="borrow"),
   path(
     'notifications/<int:id>/<int:accept>', 
     views.notificationResponse_view, name='borrowResponse'
   ),
-  path('give_back/<int:id>', views.giveBack_view, name='giveBack')
+
+  path('give_back/<int:id>', views.giveBack_view, name='giveBack'),
+  path(
+    'give_back/<int:id>/<int:accept>',
+    views.giveBackResponse_view, name='giveBackResponse'
+  )
 ]

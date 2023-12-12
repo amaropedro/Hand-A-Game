@@ -22,25 +22,44 @@
                 <p class="description">
                     {{notification.description}}
                 </p>
-                {% if notification.type == 'borrow' and notification.isActive == True %}
-                    <div class="buttons-container">
-                        <a 
-                            href="{% url 'borrowResponse' notification.id 1 %}" 
-                            class="accept"
-                        >
-                            Aceitar
-                        </a>
-                        <a 
-                            href="{% url 'borrowResponse' notification.id 0 %}" 
-                            class="refuse"
-                        >
-                            Recusar
-                        </a>
-                    </div>
-                {% else %}
-                    <div class="notification-date">
-                        {{notification.date}}
-                    </div>
+                {% if notification.isActive == True %}
+                    {% if notification.type == 'borrow' %}
+                        <div class="buttons-container">
+                            <a 
+                                href="{% url 'borrowResponse' notification.id 1 %}" 
+                                class="accept"
+                            >
+                                Aceitar
+                            </a>
+                            <a 
+                                href="{% url 'borrowResponse' notification.id 0 %}" 
+                                class="refuse"
+                            >
+                                Recusar
+                            </a>
+                        </div>
+                    {% else %}
+                        {% if notification.type == 'giveBack' %}
+                            <div class="buttons-container">
+                                <a 
+                                    href="{% url 'giveBackResponse' notification.id 1 %}" 
+                                    class="accept"
+                                >
+                                    Sim
+                                </a>
+                                <a 
+                                    href="{% url 'giveBackResponse' notification.id 0 %}" 
+                                    class="refuse"
+                                >
+                                    Não
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="notification-date">
+                                {{notification.date}}
+                            </div>
+                        {% endif %}
+                    {% endif %}
                 {% endif %}   
             </div>
 
