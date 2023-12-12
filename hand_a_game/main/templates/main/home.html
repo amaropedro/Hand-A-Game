@@ -81,21 +81,24 @@
     
                         
                         <div class="overlay">
-                            <a href="{% url 'borrow' game.id %}" class="overlay-action">
-                                <img src="{% static 'main/images/plus-circle.svg' %}">
-                                Pegar emprestado
-                            </a>
-
-                            <div>
+                            <div class="more-info-prompt">
+                                Passe o mouse para mais informações
+                            </div>
+                            
+                            <div class="more-info">
                                 Nome: {{game.title}}
                                 <br>
                                 Dono: {{game.user.username}}
                                 <br>
                                 Preço: R$ {{game.price}}
-                            </div>
-                            <div>
+                                <br>
                                 Tempo Maximo: {{game.rentalDuration}} dias
                             </div>
+                            
+                            <a href="{% url 'borrow' game.id %}" class="overlay-action">
+                                <img src="{% static 'main/images/plus-circle.svg' %}">
+                                Pegar emprestado
+                            </a>
                         </div>
                     </div>
                 {% endif %}

@@ -27,22 +27,22 @@
                     </div>
 
                     {% if game.isRented %}
-                        <div class="overlay" style="text-align: center; font-weight: 800; font-size: 1rem">
+                        <div class="overlay-static" style="text-align: center; font-weight: 800; font-size: 1rem; padding: 0">
                             Emprestado à {{rental.user.username}} em {{rental.initialDate}}
                         </div>
                     {% endif %}
 
-                    <div class="overlay">
-                        <a href="edit_game/{{ game.id }}" class="overlay-action">
-                            <img src="{% static 'main/images/pencil-line.svg' %}">
-                            Editar
-                        </a>
+                    <div class="overlay-static">
                         <div>
                             Nome: {{game.title}}
                         </div>
                         <div>
                             Tempo Maximo: {{game.rentalDuration}} dias
                         </div>
+                        <a href="edit_game/{{ game.id }}" class="overlay-action">
+                            <img src="{% static 'main/images/pencil-line.svg' %}">
+                            Editar
+                        </a>
                     </div>
                 </div>
 
