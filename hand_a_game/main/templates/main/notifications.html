@@ -61,6 +61,17 @@
                                     Não
                                 </a>
                             </div>
+                        {% else %}
+                            {% if notification.type == 'payment' %}
+                                <div class="buttons-container">
+                                    <a 
+                                        href="{% url 'payment' notification.id %}" 
+                                        class="accept"
+                                    >
+                                        Pagar
+                                    </a>
+                                </div>
+                            {% endif %}
                         {% endif %}
                     {% endif %}   
                 {% else %}

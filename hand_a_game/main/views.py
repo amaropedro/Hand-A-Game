@@ -1,14 +1,13 @@
 
 import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
-from .models import Game, User, Platform, Genre, RentalManager, Notification, NotificationTypes, PaymentManager
+from .models import Game, User, Platform, Genre, RentalManager, Notification, NotificationTypes
 from .forms import AddGameForm, EditUserForm
 
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
@@ -293,6 +292,7 @@ def notifications_view(request):
     if request.user.is_authenticated:
 
         notifications = Notification.objects.filter(user_receiver=request.user)
+        notifications = notifications.reverse()
 
         return render(request, 'main/notifications.html', {
             'currentNumber': 4,
@@ -330,9 +330,9 @@ def borrow_view(request, id):
                         type=NotificationTypes.borrow
                     )
 
-                    request.session['error'] = 'Emprestimo Solicitado!'
+                    request.session['error'] = 'Empréstimo Solicitado!'
                 else:
-                    request.session['error'] = 'Emprestimo já solicitado!'
+                    request.session['error'] = 'Empréstimo já solicitado!'
             else:
                 request.session['error'] = 'Jogo indisponivel!'
         except Http404:
@@ -350,17 +350,30 @@ def borrowResponse_view(request, id, accept):
             notification.set_isActive(False)
 
             if(accept == 1):
-                notification.set_title("Empréstimo - Aceito")
                 
-                RentalManager.borrowGame(notification.user_sender, notification.game)
+                if notification.game.price > 0:
+                    notification.set_title("Empréstimo - Pagamento pendente")
+                
+                    response = Notification()
+                    response.newNotification(
+                        title='Pagamento - Empréstimo',
+                        description=f"Efeitue o pagamento para liberação de {notification.game.title}",
+                        receiver= notification.user_sender,
+                        game= notification.game,
+                        type=NotificationTypes.payment
+                    )
+                else:
+                    notification.set_title("Empréstimo - Aceito")
+                    
+                    RentalManager.borrowGame(notification.user_sender, notification.game)
 
-                response = Notification()
-                response.newNotification(
-                    title='Resultado: Empréstimo',
-                    description=f"O usuário @{notification.user_receiver.username} aceitou emprestar o jogo {notification.game.title}!",
-                    receiver=notification.user_sender,
-                    type=NotificationTypes.info
-                )
+                    response = Notification()
+                    response.newNotification(
+                        title='Resultado: Empréstimo',
+                        description=f"O usuário @{notification.user_receiver.username} aceitou emprestar o jogo {notification.game.title}!",
+                        receiver=notification.user_sender,
+                        type=NotificationTypes.info
+                    )
             else:
                 notification.set_title("Empréstimo - Recusado")
                 
@@ -459,8 +472,4 @@ def giveBackResponse_view(request, id, accept):
 
     return redirect('login')
 
-def payment_view(request, notification_id):
-    notification = Notification.objects.filter(id=notification_id)[0]
-    new_payment = PaymentManager()
-    new_payment.handle_payment(notification.user_sender, notification.game)
     

@@ -1,14 +1,13 @@
 from django.db import models
-from django.utils import timezone
 
 import os
+import datetime
 
 from django.db import models
 from django.dispatch import receiver
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # Create your models here.
-import datetime
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 class MyUserManager(BaseUserManager):
   def create_user(self, email, username, password=None, city=None, phone=None, **extra_fields):
@@ -185,6 +184,7 @@ class NotificationTypes():
   info = "info"
   borrow = "borrow"
   giveBack = "giveBack"
+  payment = "payment"
   
 class Notification(models.Model):
   title = models.CharField(max_length=50, default="")
@@ -242,15 +242,4 @@ class Notification(models.Model):
 
   def __str__(self):
     return f"{self.title}"
-  
-class PaymentManager(models.Model):
-  date = models.DateField()
-  isPayed = models.BooleanField(default=False)
-  
-  def handle_payment(self, user, game):
-    self.isPayed = True
-    self.date = datetime.datetime.now()
-    self.save()
-    
-    RentalManager.borrowGame(user, game)
       
