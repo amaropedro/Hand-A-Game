@@ -169,6 +169,13 @@ class RentalManager(models.Model):
     game.set_rented(True)
     game.set_isAvailableToRent(False)
 
+  def giveBackGame(self):
+    self.game.set_rented(False)
+    self.game.set_isAvailableToRent(True)
+    self.finished = True
+
+    self.save()
+
 
   def __str__(self):
     return f"Jogo {self.game} alugado por {self.user} em {self.initialDate}"

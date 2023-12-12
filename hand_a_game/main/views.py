@@ -311,6 +311,8 @@ def borrowed_view(request):
         erro = request.session.pop('error', '')
 
         rentals = RentalManager.objects.filter(user=request.user)
+        rentals = rentals.filter(finished=False)
+        
         games_list = [rental.game for rental in rentals]
 
         return render(request, 'main/borrowed.html', {
@@ -361,5 +363,18 @@ def notificationResponse_view(request, id, accept):
 
                 response.save()
         return redirect('notifications')
+
+    return redirect('login')
+
+def giveBack_view(request, id):
+    if request.user.is_authenticated:
+
+        # Devolve o jogo
+        game = Game.objects.filter(id=id)[0]
+        rentalManagerGame = RentalManager.objects.filter(game=game)[0]
+        rentalManagerGame.giveBackGame()
+
+        # Retorna os jogos que o usuário emprestou
+        return redirect('borrowed')
 
     return redirect('login')
