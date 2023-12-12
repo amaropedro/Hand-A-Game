@@ -399,7 +399,7 @@ def giveBack_view(request, id):
                     notification = Notification()
                     notification.newNotification(
                         title='Devolução de jogo',
-                        description="O usuário @{request.user.username} devolveu o jogo {game.title} para você?",
+                        description=f"O usuário @{request.user.username} devolveu o jogo {game.title} para você?",
                         receiver=game.user,
                         sender=request.user,
                         game=game,
